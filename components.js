@@ -1,13 +1,13 @@
-/* ── Sgee Studios · Shared Components ── */
+/* ── SG Studios · Shared Components ── */
 
 function renderNav(activePage = '') {
   const pages = [
     { href: 'index.html', label: 'Home' },
     { href: 'louisiana-real-estate.html', label: 'Louisiana Real Estate' },
     { href: 'atlanta-real-estate.html', label: 'Atlanta Real Estate' },
-    { href: 'weddings.html', label: 'Weddings' },
+    
     { href: 'corporate.html', label: 'Corporate' },
-    { href: 'personal.html', label: 'Personal' },
+    { href: 'personal.html', label: 'Weddings & Personal' },
     { href: 'pricing.html', label: 'Pricing' },
   ];
 
@@ -17,7 +17,7 @@ function renderNav(activePage = '') {
 
   document.getElementById('nav-placeholder').innerHTML = `
     <nav id="main-nav">
-      <a href="index.html" class="nav-logo">Sgee Studios</a>
+      <a href="index.html" class="nav-logo">SG Studios</a>
       <ul class="nav-links">${links}</ul>
       <a href="https://media.sgeestudios.com/Super-Shopper" target="_blank" class="nav-book">Book now</a>
     </nav>
@@ -39,7 +39,7 @@ function renderFooter() {
     <footer>
       <div class="footer-grid">
         <div class="footer-brand">
-          <h3>Sgee Studios</h3>
+          <h3>SG Studios</h3>
           <p>Professional photography for real estate, weddings, portraits, corporate, and events. Serving Louisiana and Atlanta.</p>
           <p style="margin-top:1rem;font-size:0.72rem;color:rgba(248,246,242,0.2);">media.sgeestudios.com</p>
         </div>
@@ -72,7 +72,7 @@ function renderFooter() {
         </div>
       </div>
       <div class="footer-bottom">
-        <span class="footer-copy">© 2026 Sgee Studios LLC. All rights reserved.</span>
+        <span class="footer-copy">© 2026 SG Studios LLC. All rights reserved.</span>
         <div class="footer-social">
           <a href="https://www.instagram.com/sgeestudios" target="_blank">Instagram</a>
           <a href="https://www.facebook.com/people/Sgeestudios/61558964259345/" target="_blank">Facebook</a>
