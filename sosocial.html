@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Olympics — U.S. Social Media Benchmarking Dashboard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg2: #f7f7f5;
+    --bg3: #f0efe8;
+    --text: #1a1a18;
+    --text2: #5f5e5a;
+    --text3: #888780;
+    --border: rgba(0,0,0,0.12);
+    --border2: rgba(0,0,0,0.22);
+    --info-bg: #e6f1fb;
+    --info-text: #185fa5;
+    --info-border: #b5d4f4;
+    --success-bg: #eaf3de;
+    --success-text: #3b6d11;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1e1e1c;
+      --bg2: #2a2a28;
+      --bg3: #252523;
+      --text: #f0efe8;
+      --text2: #b4b2a9;
+      --text3: #888780;
+      --border: rgba(255,255,255,0.12);
+      --border2: rgba(255,255,255,0.22);
+      --info-bg: #042c53;
+      --info-text: #85b7eb;
+      --info-border: #0c447c;
+      --success-bg: #173404;
+      --success-text: #97c459;
+    }
+  }
+
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg3); color: var(--text); font-size: 14px; line-height: 1.5; min-height: 100vh; }
+
+  .wrapper { max-width: 1100px; margin: 0 auto; padding: 24px 20px 48px; }
+
+  .hdr { margin-bottom: 24px; }
+  .hdr-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .hdr h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .hdr p { font-size: 13px; color: var(--text2); }
+  .hdr-badge { background: var(--info-bg); color: var(--info-text); border: 0.5px solid var(--info-border); padding: 4px 12px; border-radius: var(--radius); font-size: 12px; font-weight: 500; white-space: nowrap; }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+  @media (max-width: 600px) { .metrics { grid-template-columns: repeat(2, 1fr); } }
+  .mc { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+  .mc-label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+  .mc-val { font-size: 24px; font-weight: 600; }
+  .mc-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+  .card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 20px; }
+
+  .tab-row { display: flex; gap: 0; border-bottom: 0.5px solid var(--border); overflow-x: auto; }
+  .tab-btn { padding: 12px 18px; font-size: 13px; font-weight: 500; color: var(--text2); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: color .15s; display: flex; align-items: center; gap: 6px; }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--info-text); border-bottom-color: var(--info-text); }
+
+  .tab-content { padding: 16px 20px; }
+
+  .controls { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .controls label { font-size: 12px; color: var(--text2); font-weight: 500; }
+  .controls select, .controls input[type=search] {
+    font-size: 13px; padding: 7px 11px; border: 0.5px solid var(--border2); border-radius: var(--radius);
+    background: var(--bg); color: var(--text); outline: none; min-width: 140px;
+  }
+  .controls select:focus, .controls input:focus { border-color: var(--info-text); box-shadow: 0 0 0 2px var(--info-border); }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { font-size: 11px; font-weight: 600; color: var(--text2); padding: 8px 12px; text-align: left; border-bottom: 0.5px solid var(--border2); white-space: nowrap; cursor: pointer; user-select: none; text-transform: uppercase; letter-spacing: .04em; }
+  thead th:hover { color: var(--text); }
+  thead th.sorted { color: var(--info-text); }
+  thead th .si { margin-left: 3px; opacity: .45; font-size: 10px; }
+  thead th.sorted .si { opacity: 1; }
+  tbody td { padding: 9px 12px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: var(--bg2); }
+  tbody tr.la-row td { background: rgba(250,199,117,0.07); }
+  tbody tr.la-row:hover td { background: rgba(250,199,117,0.14); }
+
+  .rb { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 600; }
+  .r1 { background: #fac775; color: #412402; }
+  .r2 { background: #b4b2a9; color: #2c2c2a; }
+  .r3 { background: #f0997b; color: #4a1b0c; }
+  .rn { background: var(--bg2); color: var(--text3); }
+
+  .bw { display: flex; align-items: center; gap: 7px; min-width: 110px; }
+  .bb { flex: 1; height: 5px; background: var(--bg2); border-radius: 3px; overflow: hidden; min-width: 50px; }
+  .bf { height: 5px; border-radius: 3px; }
+  .bfb { background: #185fa5; }
+  .big { background: #b85c8c; }
+  .btt { background: #2c2c2a; }
+  @media (prefers-color-scheme: dark) { .btt { background: #d3d1c7; } }
+  .bnum { font-size: 12px; font-weight: 500; color: var(--text2); min-width: 44px; text-align: right; }
+
+  .tag { padding: 2px 8px; border-radius: var(--radius); font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .tag-national { background: #cecbf6; color: #26215c; }
+  .tag-state { background: #9fe1cb; color: #04342c; }
+  .tag-la { background: #fac775; color: #412402; }
+  .tag-tt { background: #e1f5ee; color: #0f6e56; }
+
+  .icon-link { color: var(--text2); font-size: 16px; text-decoration: none; margin-right: 4px; transition: color .15s; }
+  .icon-link:hover { color: var(--text); }
+  .icon-link.fb:hover { color: #185fa5; }
+  .icon-link.ig:hover { color: #b85c8c; }
+  .icon-link.tt:hover { color: var(--text); }
+
+  .top-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  @media (max-width: 700px) { .top-grid { grid-template-columns: 1fr; } }
+  .top-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 900px) { .top-grid-4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .top-grid-4 { grid-template-columns: 1fr; } }
+  .tc { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+  .tc h3 { font-size: 11px; font-weight: 600; color: var(--text2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: .05em; display: flex; align-items: center; gap: 6px; }
+  .tcr { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 0.5px solid var(--border); font-size: 12px; gap: 8px; }
+  .tcr:last-child { border-bottom: none; }
+  .tcn { font-weight: 500; color: var(--text); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tcv { color: var(--text2); white-space: nowrap; font-weight: 600; }
+
+  .tt-callout { background: var(--bg2); border: 0.5px solid var(--border); border-left: 3px solid #2c2c2a; border-radius: var(--radius-lg); padding: 14px 16px; margin-bottom: 16px; }
+  @media (prefers-color-scheme: dark) { .tt-callout { border-left-color: #d3d1c7; } }
+  .tt-callout h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 7px; }
+  .tt-callout p { font-size: 13px; color: var(--text2); line-height: 1.65; }
+  .tt-callout strong { color: var(--text); }
+
+  .platform-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; font-size: 12px; color: var(--text2); }
+  .platform-legend span { display: flex; align-items: center; gap: 5px; }
+
+  .note { font-size: 11px; color: var(--text3); line-height: 1.7; padding: 12px 20px; border-top: 0.5px solid var(--border); }
+
+  .none { color: var(--text3); font-size: 12px; }
+
+  .check { color: var(--success-text); font-weight: 600; }
+  .platform-cell { text-align: center !important; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="hdr">
+    <div class="hdr-top">
+      <div>
+        <h1>Special Olympics — U.S. Social Media Benchmarking</h1>
+        <p>National &amp; state chapter comparison across Facebook, Instagram, and TikTok &nbsp;·&nbsp; Data researched June 2026</p>
+      </div>
+      <span class="hdr-badge">Prepared for Special Olympics Louisiana</span>
+    </div>
+  </div>
+
+  <div class="metrics" id="metrics"></div>
+
+  <div class="card">
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="setTab('all',this)"><i class="ti ti-table"></i> All chapters</button>
+      <button class="tab-btn" onclick="setTab('top',this)"><i class="ti ti-trophy"></i> Top performers</button>
+      <button class="tab-btn" onclick="setTab('tiktok',this)"><i class="ti ti-brand-tiktok"></i> TikTok spotlight</button>
+      <button class="tab-btn" onclick="setTab('platform',this)"><i class="ti ti-layout-grid"></i> Platform matrix</button>
+    </div>
+
+    <div id="tab-all" class="tab-content">
+      <div class="controls">
+        <label>Type:</label>
+        <select id="filter-type" onchange="render()">
+          <option value="all">All types</option>
+          <option value="national">National / umbrella</option>
+          <option value="state">State chapters</option>
+        </select>
+        <label>Platform:</label>
+        <select id="filter-platform" onchange="render()">
+          <option value="all">All platforms</option>
+          <option value="fb">Has Facebook</option>
+          <option value="ig">Has Instagram</option>
+          <option value="tt">Has TikTok (count)</option>
+        </select>
+        <input type="search" id="search" placeholder="Search chapter…" oninput="render()">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortBy('rank')" id="th-rank"># <span class="si">↕</span></th>
+              <th onclick="sortBy('name')" id="th-name">Chapter <span class="si">↕</span></th>
+              <th onclick="sortBy('type')" id="th-type">Type <span class="si">↕</span></th>
+              <th onclick="sortBy('fb')" id="th-fb"><i class="ti ti-brand-facebook" style="color:#185fa5"></i> Facebook <span class="si">↓</span></th>
+              <th onclick="sortBy('ig')" id="th-ig"><i class="ti ti-brand-instagram" style="color:#b85c8c"></i> Instagram <span class="si">↕</span></th>
+              <th onclick="sortBy('tt')" id="th-tt"><i class="ti ti-brand-tiktok"></i> TikTok <span class="si">↕</span></th>
+              <th onclick="sortBy('total')" id="th-total">Total reach <span class="si">↕</span></th>
+              <th>Links</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="tab-top" class="tab-content" style="display:none">
+      <div class="top-grid-4" id="top-cards"></div>
+    </div>
+
+    <div id="tab-tiktok" class="tab-content" style="display:none">
+      <div class="tt-callout">
+        <h3><i class="ti ti-brand-tiktok"></i> TikTok standout: Special Olympics Minnesota</h3>
+        <p>Minnesota is the undisputed TikTok leader among all U.S. state chapters with <strong>~38,600 followers</strong> and over <strong>1.5 million likes</strong> — roughly 65× the next confirmed state. Their strategy of short, emotional athlete-story content and event coverage has driven exceptional organic reach, boosted further by hosting the 2026 USA Games. The International account has ~15,900 followers, meaning Minnesota's state chapter actually surpasses the global org on TikTok. <strong>Most state chapters have little to no TikTok presence</strong>, making this the most open competitive landscape for Louisiana to enter.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Chapter</th>
+              <th>Handle</th>
+              <th>TikTok followers</th>
+              <th>TikTok likes</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="tt-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="tab-platform" class="tab-content" style="display:none">
+      <div class="platform-legend">
+        <span><i class="ti ti-brand-facebook" style="color:#185fa5"></i> Facebook</span>
+        <span><i class="ti ti-brand-instagram" style="color:#b85c8c"></i> Instagram</span>
+        <span><i class="ti ti-brand-tiktok"></i> TikTok</span>
+        <span><i class="ti ti-brand-x"></i> Twitter/X</span>
+        <span><i class="ti ti-brand-youtube" style="color:#a32d2d"></i> YouTube</span>
+        <span><i class="ti ti-brand-linkedin" style="color:#185fa5"></i> LinkedIn</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Chapter</th>
+              <th class="platform-cell"><i class="ti ti-brand-facebook" style="color:#185fa5"></i></th>
+              <th class="platform-cell"><i class="ti ti-brand-instagram" style="color:#b85c8c"></i></th>
+              <th class="platform-cell"><i class="ti ti-brand-tiktok"></i></th>
+              <th class="platform-cell"><i class="ti ti-brand-x"></i></th>
+              <th class="platform-cell"><i class="ti ti-brand-youtube" style="color:#a32d2d"></i></th>
+              <th class="platform-cell"><i class="ti ti-brand-linkedin" style="color:#185fa5"></i></th>
+            </tr>
+          </thead>
+          <tbody id="ptbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="note">
+      Data sourced from public Facebook page likes, Instagram follower counts, and TikTok profiles, June 2026. TikTok blocks automated scraping; counts marked (~) are approximate from search snippets. "Active" = confirmed account exists but exact follower count unavailable. "—" = no verified public account found. Louisiana highlighted in gold. Ranks are calculated across all chapters including national accounts. This report was prepared to support marketing strategy development for Special Olympics Louisiana.
+    </div>
+  </div>
+
+</div>
+
+<script>
+const FB_MAX=900000,IG_MAX=220000,TT_MAX=40000;
+
+const data=[
+  {name:"Special Olympics (International)",type:"national",fb:861000,ig:216000,tt:15900,ttApprox:true,ttLikes:156300,ttHandle:"@special.olympics",ttUrl:"https://tiktok.com/@special.olympics",twitter:"@SpecialOlympics",tiktok:true,youtube:true,linkedin:true,fburl:"https://facebook.com/SpecialOlympics",igurl:"https://instagram.com/specialolympics"},
+  {name:"Special Olympics USA",type:"national",fb:23000,ig:11000,tt:null,ttHandle:null,twitter:"@SpecialOlympicsUSA",tiktok:false,youtube:true,linkedin:false,fburl:"https://facebook.com/specialolympicsusa",igurl:"https://instagram.com/specialolympicsusa"},
+  {name:"Special Olympics North America",type:"national",fb:10600,ig:9191,tt:null,ttHandle:null,twitter:"@SONorthAmerica",tiktok:false,youtube:false,linkedin:false,fburl:"https://facebook.com/sonorthamerica",igurl:"https://instagram.com/sonorthamerica"},
+  {name:"SO USA Games (2026 Minnesota)",type:"national",fb:null,ig:23000,tt:null,ttHandle:null,twitter:"@2026USAGames",tiktok:false,youtube:false,linkedin:false,fburl:null,igurl:"https://instagram.com/specialolympicsusagames"},
+  {name:"Special Olympics Minnesota",type:"state",fb:20012,ig:8662,tt:38600,ttApprox:true,ttLikes:1500000,ttHandle:"@sominnesota",ttUrl:"https://tiktok.com/@sominnesota",twitter:"@SOMinnesota",tiktok:true,youtube:true,linkedin:false,fburl:"https://facebook.com/SOMinnesota",igurl:"https://instagram.com/sominnesota"},
+  {name:"Special Olympics Illinois",type:"state",fb:44475,ig:16000,tt:null,ttHandle:"@specialolympicsillinois",ttUrl:"https://tiktok.com/@specialolympicsillinois",ttNote:"Active — low followers",twitter:"@SOIllinois",tiktok:true,youtube:true,linkedin:false,fburl:"https://facebook.com/SpecialOlympicsIllinois",igurl:"https://instagram.com/specialolympicsillinois"},
+  {name:"Special Olympics Wisconsin",type:"state",fb:35119,ig:null,tt:null,ttHandle:null,twitter:"@SOWisconsin",tiktok:false,youtube:true,linkedin:true,fburl:"https://facebook.com/SpecialOlympicsWisconsin",igurl:null},
+  {name:"Special Olympics Florida",type:"state",fb:32135,ig:13000,tt:null,ttHandle:"@specialolympicsfl",ttUrl:"https://tiktok.com/@specialolympicsfl",ttNote:"Active — low followers",twitter:"@SpecialOlympicsFL",tiktok:true,youtube:true,linkedin:false,fburl:"https://facebook.com/specialolympicsflorida",igurl:"https://instagram.com/specialolympicsfl"},
+  {name:"Special Olympics New Jersey",type:"state",fb:31214,ig:13000,tt:null,ttHandle:null,twitter:"@SONJ",tiktok:false,youtube:true,linkedin:false,fburl:"https://facebook.com/SONewJersey",igurl:"https://instagram.com/specialolympicsnj"},
+  {name:"Special Olympics Texas",type:"state",fb:29238,ig:11000,tt:null,ttHandle:null,twitter:"@SOTexas",tiktok:false,youtube:true,linkedin:false,fburl:"https://facebook.com/specialolympicstx",igurl:"https://instagram.com/specialolympicstx"},
+  {name:"Special Olympics New York",type:"state",fb:28232,ig:10000,tt:null,ttHandle:null,twitter:"@SONY",tiktok:false,youtube:true,linkedin:false,fburl:"https://facebook.com/SpecialOlympicsNewYork",igurl:"https://instagram.com/specialolympicsny"},
+  {name:"Special Olympics Pennsylvania",type:"state",fb:27782,ig:11000,tt:null,ttHandle:"@specialolympics_pa",ttUrl:"https://tiktok.com/@specialolympics_pa",ttNote:"Active — low followers",twitter:"@SOPenn",tiktok:true,youtube:true,linkedin:false,fburl:"https://facebook.com/specialolympicspa",igurl:"https://instagram.com/specialolympicspennsylvania"},
+  {name:"Special Olympics Arizona",type:"state",fb:24867,ig:null,tt:null,ttHandle:null,twitter:"@SOAZ",tiktok:false,youtube:false,linkedin:false,fburl:"https://facebook.com/SpecialOlympicsArizona",igurl:null},
+  {name:"Special Olympics Colorado",type:"state",fb:20537,ig:11000,tt:null,ttHandle:null,twitter:"@SOColorado",tiktok:false,youtube:true,linkedin:false,fburl:"https://facebook.com/SpecialOlympicsColorado",igurl:"https://instagram.com/specialolympicsco"},
+  {name:"Special Olympics Washington",type:"state",fb:20000,ig:8028,tt:593,ttApprox:false,ttLikes:3000,ttHandle:"@so_washington",ttUrl:"https://tiktok.com/@so_washington",twitter:"@SOWashington",tiktok:true,youtube:true,linkedin:true,fburl:"https://facebook.com/SpecialOlympicsWa",igurl:"https://instagram.com/specialolympicswashington"},
+  {name:"Special Olympics Maryland",type:"state",fb:19336,ig:null,tt:null,ttHandle:null,ttNote:"Active (LETR refs)",twitter:"@SpOlympicsMD",tiktok:true,youtube:true,linkedin:true,fburl:"https://facebook.com/SpecialOlympicsMD",igurl:null},
+  {name:"Special Olympics Massachusetts",type:"state",fb:18754,ig:12000,tt:556,ttApprox:false,ttLikes:null,ttHandle:"@specialolympicsma",ttUrl:"https://tiktok.com/@specialolympicsma",twitter:"@SOmass",tiktok:true,youtube:true,linkedin:false,fburl:"https://facebook.com/SpecialOlympicsMassachusetts",igurl:"https://instagram.com/specialolympicsma"},
+  {name:"Special Olympics Tennessee",type:"state",fb:18031,ig:null,tt:null,ttHandle:null,twitter:"@SOTennessee",tiktok:false,youtube:false,linkedin:false,fburl:"https://facebook.com/specialolympicstn",igurl:null},
+  {name:"Special Olympics Michigan",type:"state",fb:null,ig:6974,tt:null,ttHandle:null,twitter:"@SOMichigan",tiktok:false,youtube:false,linkedin:false,fburl:null,igurl:"https://instagram.com/spolympicsmi"},
+  {name:"Special Olympics NorCal",type:"state",fb:null,ig:7301,tt:null,ttHandle:null,twitter:"@SONorCal",tiktok:false,youtube:false,linkedin:false,fburl:"https://facebook.com/SONorCal",igurl:"https://instagram.com/specialolympicsnca"},
+  {name:"Special Olympics Virginia",type:"state",fb:null,ig:7111,tt:null,ttHandle:null,twitter:"@SOVirginia",tiktok:false,youtube:true,linkedin:false,fburl:null,igurl:"https://instagram.com/specialolympicsva"},
+  {name:"Special Olympics Ohio",type:"state",fb:null,ig:5251,tt:null,ttHandle:null,twitter:"@SOOhio",tiktok:false,youtube:false,linkedin:false,fburl:null,igurl:"https://instagram.com/specialolympicsoh"},
+  {name:"Special Olympics North Carolina",type:"state",fb:null,ig:5142,tt:null,ttHandle:null,twitter:"@SONC",tiktok:false,youtube:false,linkedin:false,fburl:null,igurl:"https://instagram.com/specialolympics_nc"},
+  {name:"Special Olympics Oregon",type:"state",fb:null,ig:4068,tt:null,ttHandle:null,twitter:"@SOOregon",tiktok:false,youtube:false,linkedin:false,fburl:null,igurl:"https://instagram.com/soorstate"},
+  {name:"Special Olympics South Carolina",type:"state",fb:null,ig:3115,tt:null,ttHandle:null,twitter:"@SOSC",tiktok:false,youtube:false,linkedin:false,fburl:null,igurl:"https://instagram.com/specialolympicssc"},
+  {name:"Special Olympics Indiana",type:"state",fb:null,ig:3095,tt:null,ttHandle:null,twitter:"@SOIndiana",tiktok:false,youtube:false,linkedin:false,fburl:null,igurl:"https://instagram.com/soindiana1"},
+  {name:"Special Olympics Kentucky",type:"state",fb:null,ig:2738,tt:null,ttHandle:null,twitter:"@SOKentucky",tiktok:false,youtube:false,linkedin:false,fburl:null,igurl:"https://instagram.com/so_kentucky"},
+  {name:"Special Olympics Georgia",type:"state",fb:null,ig:2276,tt:null,ttHandle:null,twitter:"@SOGeorgia",tiktok:false,youtube:false,linkedin:false,fburl:null,igurl:"https://instagram.com/specialolympicsgeorgia"},
+  {name:"Special Olympics Louisiana",type:"state",la:true,fb:12538,ig:2676,tt:null,ttHandle:null,twitter:"@SOLouisiana",tiktok:false,youtube:true,linkedin:true,fburl:"https://facebook.com/specialolympicslouisiana",igurl:"https://instagram.com/specialolympicslouisiana"},
+  {name:"Special Olympics New Hampshire",type:"state",fb:null,ig:463,tt:null,ttHandle:null,twitter:"@SONH",tiktok:false,youtube:false,linkedin:false,fburl:null,igurl:"https://instagram.com/sonh_ig"},
+];
+
+let sortCol='fb',sortDir=-1,currentTab='all';
+
+function fmt(n,approx){
+  if(!n&&n!==0)return null;
+  const p=approx?'~':'';
+  if(n>=1000000)return p+(n/1000000).toFixed(1)+'M';
+  if(n>=1000)return p+Math.round(n/100)/10+'K';
+  return p+n.toString();
+}
+function total(d){return(d.fb||0)+(d.ig||0)+(d.tt||0);}
+
+function setTab(t,btn){
+  currentTab=t;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ['all','top','tiktok','platform'].forEach(id=>{
+    document.getElementById('tab-'+id).style.display=t===id?'block':'none';
+  });
+  if(t==='top')renderTop();
+  if(t==='tiktok')renderTikTok();
+  if(t==='platform')renderPlatform();
+}
+
+function sortBy(col){
+  if(sortCol===col)sortDir*=-1;else{sortCol=col;sortDir=-1;}
+  document.querySelectorAll('thead th').forEach(t=>t.classList.remove('sorted'));
+  const th=document.getElementById('th-'+col);
+  if(th)th.classList.add('sorted');
+  render();
+}
+
+function filtered(){
+  const ft=document.getElementById('filter-type').value;
+  const fp=document.getElementById('filter-platform').value;
+  const s=(document.getElementById('search').value||'').toLowerCase();
+  return data.filter(d=>{
+    if(ft==='national'&&d.type!=='national')return false;
+    if(ft==='state'&&d.type!=='state')return false;
+    if(fp==='fb'&&!d.fb)return false;
+    if(fp==='ig'&&!d.ig)return false;
+    if(fp==='tt'&&!d.tt)return false;
+    if(s&&!d.name.toLowerCase().includes(s))return false;
+    return true;
+  });
+}
+
+function getSorted(arr){
+  return [...arr].sort((a,b)=>{
+    if(sortCol==='name'){return(a.name<b.name?1:-1)*sortDir;}
+    if(sortCol==='type'){return(a.type<b.type?1:-1)*sortDir;}
+    const av=sortCol==='total'?total(a):(a[sortCol]||0);
+    const bv=sortCol==='total'?total(b):(b[sortCol]||0);
+    return(av-bv)*sortDir;
+  });
+}
+
+function rb(i){
+  const cl=i===0?'r1':i===1?'r2':i===2?'r3':'rn';
+  return`<span class="rb ${cl}">${i+1}</span>`;
+}
+
+function bar(val,max,cls,approx){
+  if(!val&&val!==0)return'<span class="none">—</span>';
+  const pct=Math.min(100,Math.round(val/max*100));
+  const label=fmt(val,approx);
+  return`<div class="bw"><div class="bb"><div class="bf ${cls}" style="width:${pct}%"></div></div><span class="bnum">${label}</span></div>`;
+}
+
+function render(){
+  const rows=getSorted(filtered());
+  const allSorted=getSorted(data);
+  const withFb=data.filter(d=>d.fb).length;
+  const withIg=data.filter(d=>d.ig).length;
+  const withTt=data.filter(d=>d.tt||d.ttNote||d.tiktok).length;
+  const laFbRank=data.filter(d=>d.fb).sort((a,b)=>b.fb-a.fb).findIndex(d=>d.la)+1;
+
+  document.getElementById('metrics').innerHTML=`
+    <div class="mc"><div class="mc-label">Chapters tracked</div><div class="mc-val">${data.length}</div><div class="mc-sub">${data.filter(d=>d.type==='state').length} state + ${data.filter(d=>d.type==='national').length} national</div></div>
+    <div class="mc"><div class="mc-label"><i class="ti ti-brand-facebook" style="color:#185fa5"></i> Facebook</div><div class="mc-val">${withFb}/${data.length}</div><div class="mc-sub">chapters with FB page</div></div>
+    <div class="mc"><div class="mc-label"><i class="ti ti-brand-instagram" style="color:#b85c8c"></i> Instagram</div><div class="mc-val">${withIg}/${data.length}</div><div class="mc-sub">chapters with IG account</div></div>
+    <div class="mc"><div class="mc-label"><i class="ti ti-brand-tiktok"></i> TikTok presence</div><div class="mc-val">${withTt}/${data.length}</div><div class="mc-sub">Louisiana: #${laFbRank} on FB</div></div>
+  `;
+
+  document.getElementById('tbody').innerHTML=rows.map(d=>{
+    const gi=allSorted.findIndex(x=>x.name===d.name);
+    const tag=d.la?`<span class="tag tag-la">Louisiana</span>`:d.type==='national'?`<span class="tag tag-national">National</span>`:`<span class="tag tag-state">State</span>`;
+    const isMN=d.name.includes('Minnesota');
+    const ttCell=d.tt?bar(d.tt,TT_MAX,'btt',d.ttApprox)+(isMN?` <span class="tag tag-tt" style="font-size:10px">🌟 #1 state</span>`:''): d.ttNote?`<span class="none" style="font-size:11px">${d.ttNote}</span>`:'<span class="none">—</span>';
+    const links=[];
+    if(d.fburl)links.push(`<a href="${d.fburl}" class="icon-link fb" target="_blank" title="Facebook" aria-label="Facebook for ${d.name}"><i class="ti ti-brand-facebook"></i></a>`);
+    if(d.igurl)links.push(`<a href="${d.igurl}" class="icon-link ig" target="_blank" title="Instagram" aria-label="Instagram for ${d.name}"><i class="ti ti-brand-instagram"></i></a>`);
+    if(d.ttUrl)links.push(`<a href="${d.ttUrl}" class="icon-link tt" target="_blank" title="TikTok" aria-label="TikTok for ${d.name}"><i class="ti ti-brand-tiktok"></i></a>`);
+    return`<tr class="${d.la?'la-row':''}">
+      <td>${rb(gi)}</td>
+      <td style="font-weight:600;max-width:200px">${d.name}</td>
+      <td>${tag}</td>
+      <td>${bar(d.fb,FB_MAX,'bfb')}</td>
+      <td>${bar(d.ig,IG_MAX,'big')}</td>
+      <td>${ttCell}</td>
+      <td style="font-weight:600">${fmt(total(d))||'—'}</td>
+      <td><div style="display:flex;align-items:center">${links.join('')}</div></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderTop(){
+  const states=data.filter(d=>d.type==='state');
+  const topFb=states.filter(d=>d.fb).sort((a,b)=>b.fb-a.fb).slice(0,5);
+  const topIg=states.filter(d=>d.ig).sort((a,b)=>b.ig-a.ig).slice(0,5);
+  const topTt=states.filter(d=>d.tt).sort((a,b)=>b.tt-a.tt).slice(0,5);
+  const topAll=states.sort((a,b)=>total(b)-total(a)).slice(0,5);
+
+  function card(title,icon,color,rows,key,approx){
+    return`<div class="tc"><h3><i class="ti ${icon}" style="color:${color}"></i>${title}</h3>${rows.map((d,i)=>{
+      const medal=i===0?'🥇 ':i===1?'🥈 ':i===2?'🥉 ':'';
+      const la=d.la?` <span class="tag tag-la" style="font-size:10px;padding:1px 5px">LA</span>`:'';
+      const val=key==='total'?fmt(total(d),true):(fmt(d[key],approx)||'—');
+      return`<div class="tcr"><span class="tcn">${medal}${d.name.replace('Special Olympics ','').replace('Special Olympics','SO')}${la}</span><span class="tcv">${val}</span></div>`;
+    }).join('')}</div>`;
+  }
+
+  document.getElementById('top-cards').innerHTML=
+    card('Top 5 — Facebook','ti-brand-facebook','#185fa5',topFb,'fb',false)+
+    card('Top 5 — Instagram','ti-brand-instagram','#b85c8c',topIg,'ig',false)+
+    card('Top 5 — TikTok','ti-brand-tiktok','var(--text)',topTt,'tt',true)+
+    card('Top 5 — Total reach','ti-trophy','#ba7517',topAll,'total',true);
+}
+
+function renderTikTok(){
+  const ttRows=data.filter(d=>d.tt||d.ttNote||d.tiktok).sort((a,b)=>(b.tt||0)-(a.tt||0));
+  document.getElementById('tt-tbody').innerHTML=ttRows.map((d,i)=>{
+    const la=d.la?` <span class="tag tag-la" style="font-size:10px;padding:1px 5px">LA</span>`:'';
+    const fmtTt=d.tt?`<strong>${fmt(d.tt,d.ttApprox)}</strong>`:d.ttNote?`<span class="none">${d.ttNote}</span>`:'<span class="none">Active</span>';
+    const fmtLikes=d.ttLikes?fmt(d.ttLikes):'—';
+    const handle=d.ttUrl?`<a href="${d.ttUrl}" target="_blank" style="color:var(--info-text);text-decoration:none">${d.ttHandle}</a>`:(d.ttHandle||'—');
+    const note=d.name.includes('International')?'Global HQ account':d.name.includes('Minnesota')?'🌟 Benchmark — study this':d.name.includes('Washington')?'Active, growing':d.name.includes('Massachusetts')?'Active, growing':'';
+    return`<tr>
+      <td>${rb(i)}</td>
+      <td style="font-weight:600">${d.name.replace('Special Olympics ','')}${la}</td>
+      <td style="font-size:12px">${handle}</td>
+      <td>${fmtTt}</td>
+      <td style="color:var(--text2)">${fmtLikes}</td>
+      <td style="font-size:12px;color:var(--text3)">${note}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPlatform(){
+  function pc(val,url){
+    if(!val)return`<td class="platform-cell none">—</td>`;
+    const disp=typeof val==='number'?fmt(val):(val===true?'✓':val);
+    if(url)return`<td class="platform-cell"><a href="${url}" target="_blank" style="color:var(--info-text);text-decoration:none">${disp}</a></td>`;
+    return`<td class="platform-cell check">${disp}</td>`;
+  }
+  document.getElementById('ptbody').innerHTML=data.map(d=>{
+    const la=d.la?` <span class="tag tag-la" style="font-size:10px;padding:1px 5px">LA</span>`:'';
+    const nt=d.type==='national'?` <span class="tag tag-national" style="font-size:10px;padding:1px 5px">Natl</span>`:'';
+    return`<tr class="${d.la?'la-row':''}">
+      <td style="font-weight:600;white-space:nowrap">${d.name.replace('Special Olympics ','').replace('Special Olympics','SO')}${nt}${la}</td>
+      ${pc(d.fb,d.fburl)}
+      ${pc(d.ig,d.igurl)}
+      ${pc(d.tt||d.ttNote||(d.tiktok&&'✓'),d.ttUrl)}
+      ${pc(d.twitter)}
+      ${pc(d.youtube?'✓':null)}
+      ${pc(d.linkedin?'✓':null)}
+    </tr>`;
+  }).join('');
+}
+
+render();
+</script>
+</body>
+</html>
