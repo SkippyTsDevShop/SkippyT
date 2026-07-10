@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Target Prospects — Citreve Growth Strategy</title>
+<meta name="description" content="Named target accounts across bakery/QSR and dirty soda channels, sorted by priority and reachability.">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .scroll-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);}
+  table[data-sortable]{font-size:13.5px;min-width:920px;}
+  table[data-sortable] td{max-width:220px;}
+  .prio-badge{display:inline-block;padding:3px 10px;border-radius:999px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;}
+  .prio-1{background:#FBEADF;color:var(--coral-deep);}
+  .prio-2{background:#E1EDEA;color:var(--teal-deep);}
+  .prio-3{background:var(--frost-dim);color:var(--ink-soft);}
+  [data-tab-btn]{cursor:pointer;}
+  [data-filter]{cursor:pointer;}
+  [data-filter].active{background:var(--ink);color:var(--paper);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="/citreve/">
+      <svg class="wedge" viewBox="0 0 40 40" fill="none" aria-hidden="true" style="color:var(--teal)">
+        <circle cx="20" cy="20" r="17" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="1.3">
+          <line x1="20" y1="20" x2="20" y2="4"/><line x1="20" y1="20" x2="33" y2="12"/>
+          <line x1="20" y1="20" x2="33" y2="28"/><line x1="20" y1="20" x2="20" y2="36"/>
+          <line x1="20" y1="20" x2="7" y2="28"/><line x1="20" y1="20" x2="7" y2="12"/>
+        </g>
+      </svg>
+      <span>Citreve <small>Growth Strategy</small></span>
+    </a>
+    <nav class="primary">
+      <a href="/citreve/">Overview</a>
+      <a href="/citreve/sales/">Sales Collateral</a>
+      <a href="/citreve/prospects/" class="active">Prospects</a>
+      <a href="/citreve/chicago/">Chicago</a>
+      <a href="/citreve/content/">Content</a>
+    </nav>
+  </div>
+</header>
+
+<section class="tight">
+  <div class="wrap">
+    <span class="eyebrow">02 / Target prospects</span>
+    <h1 style="font-size:40px;margin-top:10px;">Named accounts, sorted by reachability.</h1>
+    <p class="muted" style="font-size:17px;max-width:640px;margin-top:16px;">Built from public research, not Citreve's existing pipeline — cross-check against current accounts before outreach. Click any column header to sort, or filter by priority.</p>
+  </div>
+</section>
+
+<section class="tight" style="padding-top:0;" data-tabs>
+  <div class="wrap">
+    <div class="jumpnav" style="margin-bottom:32px;">
+      <span data-tab-btn="bakery" class="jumpnav-btn active" style="cursor:pointer;padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:500;">Bakery &amp; QSR</span>
+      <span data-tab-btn="soda" class="jumpnav-btn" style="cursor:pointer;padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:500;">Dirty soda</span>
+    </div>
+
+    <div data-tab-panel="bakery">
+      <div data-filter-group="#bakery-table" style="margin-bottom:16px;display:flex;gap:8px;">
+        <span data-filter="all" class="tag active">All (14)</span>
+        <span data-filter="1" class="tag">Top target</span>
+        <span data-filter="2" class="tag">Priority 2</span>
+        <span data-filter="3" class="tag">Priority 3</span>
+      </div>
+      <div class="scroll-wrap">
+      <table data-sortable id="bakery-table">
+        <thead>
+          <tr>
+            <th data-key="company">Company <span class="arrow"></span></th>
+            <th data-key="hq">HQ / Region <span class="arrow"></span></th>
+            <th data-key="footprint">Footprint <span class="arrow"></span></th>
+            <th data-key="fit">Why they fit</th>
+            <th data-key="angle">Application angle</th>
+            <th data-key="priority">Priority <span class="arrow"></span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-priority="1" data-company="Regional New England independents" data-hq="New England" data-footprint="15">
+            <td><strong>Allie's Donuts, Neil's Donuts, The Holy Donut</strong> (NE cluster)</td><td>New England</td><td>3-15 units each</td>
+            <td>Same region/customer base as Honey Dew — easiest warm-intro pitch using the case study directly</td>
+            <td>Direct case-study pitch: "here's what a New England donut chain near you is already doing"</td>
+            <td><span class="prio-badge prio-1">Top target</span></td>
+          </tr>
+          <tr data-priority="2" data-company="Duck Donuts" data-hq="Outer Banks, NC" data-footprint="100">
+            <td><strong>Duck Donuts</strong></td><td>Outer Banks, NC (national franchise)</td><td>~100+ units</td>
+            <td>Growing franchise system, toppings-driven build-your-own-donut menu</td>
+            <td>Freeze-dried fruit as a premium topping tier / LTO flavor</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="2" data-company="Shipley Do-Nuts" data-hq="Houston, TX" data-footprint="300">
+            <td><strong>Shipley Do-Nuts</strong></td><td>Houston, TX</td><td>300+ units, concentrated TX/South</td>
+            <td>Large enough for a real supply chain, still founder/family-rooted</td>
+            <td>Filling/topping ingredient for kolaches and specialty donuts</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="3" data-company="Paula's Donuts" data-hq="Buffalo, NY" data-footprint="12">
+            <td><strong>Paula's Donuts</strong></td><td>Buffalo, NY</td><td>~10-15 units, expanding</td>
+            <td>High-growth regional chain with strong local brand loyalty</td>
+            <td>Specialty/LTO flavor ingredient matching their bold flavor identity</td>
+            <td><span class="prio-badge prio-3">Priority 3</span></td>
+          </tr>
+          <tr data-priority="3" data-company="Snowbird Donuts" data-hq="Regional (multi-state)" data-footprint="0">
+            <td><strong>Snowbird Donuts</strong></td><td>Regional (multi-state)</td><td>Unconfirmed, growing</td>
+            <td>Brand identity built around inventive, local-ingredient seasonal flavors</td>
+            <td>Seasonal/LTO flavor ingredient</td>
+            <td><span class="prio-badge prio-3">Priority 3</span></td>
+          </tr>
+          <tr data-priority="3" data-company="Daylight Donuts" data-hq="Tulsa, OK" data-footprint="0">
+            <td><strong>Daylight Donuts</strong></td><td>Tulsa, OK (franchise network)</td><td>Multi-state franchise network</td>
+            <td>Central commissary model — one relationship could cascade to many franchisees</td>
+            <td>Central-kitchen ingredient supply for franchise-wide LTO</td>
+            <td><span class="prio-badge prio-3">Priority 3</span></td>
+          </tr>
+          <tr data-priority="1" data-company="Twisted Sugar" data-hq="Layton, UT" data-footprint="30">
+            <td><strong>Twisted Sugar</strong></td><td>Layton, UT (multi-state)</td><td>30+ locations, growing</td>
+            <td>Utah-based, dual-fit like Crumbl — scratch-made cookies AND a full dirty soda menu in the same shop</td>
+            <td>Cookie mix-in ingredient AND dirty soda real-fruit upgrade — same account, two pitches</td>
+            <td><span class="prio-badge prio-1">Top target</span></td>
+          </tr>
+          <tr data-priority="2" data-company="Blue Star Donuts" data-hq="Portland, OR" data-footprint="22">
+            <td><strong>Blue Star Donuts</strong></td><td>Portland, OR</td><td>22 stores, PNW craft leader</td>
+            <td>Chef-driven gourmet donut brand, known for bold seasonal flavors and brioche-style dough</td>
+            <td>Premium seasonal topping/filling ingredient for a brand that already sells on flavor innovation</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="2" data-company="Federal Donuts" data-hq="Philadelphia, PA" data-footprint="10">
+            <td><strong>Federal Donuts</strong></td><td>Philadelphia, PA</td><td>~10 locations</td>
+            <td>Chef-founded (Zahav's Michael Solomonov) — already sells "cheffy" flavors like strawberry lavender and guava poppy</td>
+            <td>Chef-to-chef pitch: fits their existing fruit-forward specialty flavor program</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="2" data-company="Five Daughters Bakery" data-hq="Nashville, TN" data-footprint="6">
+            <td><strong>Five Daughters Bakery</strong></td><td>Nashville, TN (expanding to GA)</td><td>~6 locations, expanding regionally</td>
+            <td>100-layer croissant-donut hybrid brand with an active multi-state expansion underway</td>
+            <td>Fruit filling/topping ingredient for a brand built on inventive layered pastries</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="3" data-company="Top Pot Doughnuts" data-hq="Seattle, WA" data-footprint="15">
+            <td><strong>Top Pot Doughnuts</strong></td><td>Seattle, WA</td><td>~15% local chain share</td>
+            <td>Established regional favorite with a loyal, long-running local following</td>
+            <td>Seasonal/LTO flavor ingredient</td>
+            <td><span class="prio-badge prio-3">Priority 3</span></td>
+          </tr>
+          <tr data-priority="3" data-company="Fractured Prune Doughnuts" data-hq="East Coast (multi-state)" data-footprint="40">
+            <td><strong>Fractured Prune Doughnuts</strong></td><td>East Coast (multi-state franchise)</td><td>~40 locations</td>
+            <td>Made-to-order model with mix-your-own toppings — regional franchise still expanding</td>
+            <td>Topping ingredient for a build-your-own-donut menu model</td>
+            <td><span class="prio-badge prio-3">Priority 3</span></td>
+          </tr>
+          <tr data-priority="3" data-company="SusieCakes" data-hq="Multi-state (national bakery chain)" data-footprint="0">
+            <td><strong>SusieCakes</strong></td><td>Multi-state, national bakery chain</td><td>20-year-old brand, nationwide</td>
+            <td>Established celebration-focused bakery brand currently running a 20th-anniversary campaign</td>
+            <td>Seasonal cake topping/filling ingredient tied to milestone/celebration marketing moments</td>
+            <td><span class="prio-badge prio-3">Priority 3</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="muted" style="font-size:13px;margin-top:14px;">The New England cluster remains the easiest warm intro using the Honey Dew case study directly. Twisted Sugar is the next-strongest opener — same Utah home-field advantage as the dirty soda targets, and the same dual-fit logic Crumbl had (cookies AND dirty soda in one account).</p>
+    </div>
+
+    <div data-tab-panel="soda" style="display:none;">
+      <div data-filter-group="#soda-table" style="margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap;">
+        <span data-filter="all" class="tag active">All (14)</span>
+        <span data-filter="1" class="tag">Top target</span>
+        <span data-filter="2" class="tag">Priority 2</span>
+        <span data-filter="3" class="tag">Priority 3</span>
+      </div>
+      <div class="scroll-wrap">
+      <table data-sortable id="soda-table">
+        <thead>
+          <tr>
+            <th data-key="company">Company <span class="arrow"></span></th>
+            <th data-key="hq">HQ / Region <span class="arrow"></span></th>
+            <th data-key="footprint">Footprint <span class="arrow"></span></th>
+            <th data-key="fit">Why they fit</th>
+            <th data-key="angle">Application angle</th>
+            <th data-key="priority">Priority <span class="arrow"></span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-priority="1" data-company="Swig" data-hq="Lehi/St. George, UT" data-footprint="117">
+            <td><strong>Swig</strong></td><td>Lehi/St. George, UT</td><td>~117+ locations, 16 states</td>
+            <td>Utah-based, majority owned by Larry H. Miller Company; category leader (~$56M+ sales, +39% YoY)</td>
+            <td>Real fruit upgrade tier or seasonal LTO (dragon fruit, mango) vs. syrup</td>
+            <td><span class="prio-badge prio-1">Top target</span></td>
+          </tr>
+          <tr data-priority="1" data-company="Sodalicious" data-hq="American Fork, UT" data-footprint="26">
+            <td><strong>Sodalicious</strong></td><td>American Fork, UT</td><td>~26 locations, UT/AZ/ID</td>
+            <td>Utah-based, Pepsi partnership, positions on creative flavor combos</td>
+            <td>Real-fruit flavor differentiation vs. Swig's syrup-driven menu</td>
+            <td><span class="prio-badge prio-1">Top target</span></td>
+          </tr>
+          <tr data-priority="2" data-company="Dirty Sara-Soda" data-hq="Sarasota, FL" data-footprint="1">
+            <td><strong>Dirty Sara-Soda</strong></td><td>Sarasota/Lakewood Ranch, FL</td><td>1 mobile unit</td>
+            <td>Founder-run, launched 2026 — no corporate purchasing layer to get through</td>
+            <td>Direct founder relationship; freeze-dried fruit as a signature flavor differentiator</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="2" data-company="FiiZ College Station" data-hq="College Station, TX" data-footprint="1">
+            <td><strong>FiiZ Drinks</strong> (College Station franchisee)</td><td>College Station, TX</td><td>1 location, independently owned</td>
+            <td>Locally owned/operated — decision maker is on-site, not at corporate</td>
+            <td>Local case study: pitch the franchisee directly before going to FiiZ corporate</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="2" data-company="Independent local shops" data-hq="Nationwide" data-footprint="0">
+            <td><strong>Independent local dirty soda shops</strong> (general category)</td><td>Nationwide, concentrated UT/ID/AZ/TX and spreading</td><td>Dozens of 1-2 location shops</td>
+            <td>New shops open monthly with no fixed supplier relationships yet</td>
+            <td>Treat as an ongoing local-prospecting motion, not a one-time list</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="2" data-company="FiiZ Drinks" data-hq="Utah (multi-state)" data-footprint="0">
+            <td><strong>FiiZ Drinks</strong> (corporate)</td><td>Utah (multi-state)</td><td>Multi-state, 10,000+ combos advertised</td>
+            <td>Utah-based, customization-first brand identity</td>
+            <td>Premium real-fruit add-in tier within their existing customization model</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="3" data-company="Cool Sips" data-hq="New York City" data-footprint="3">
+            <td><strong>Cool Sips</strong></td><td>New York City</td><td>3 locations</td>
+            <td>Newer entrant (2024) expanding outside the Mountain West</td>
+            <td>Real fruit as a brand differentiator while still building menu identity</td>
+            <td><span class="prio-badge prio-3">Priority 3</span></td>
+          </tr>
+          <tr data-priority="3" data-company="Sodabox" data-hq="Multi-state" data-footprint="0">
+            <td><strong>Sodabox</strong></td><td>Multi-state (licensing model)</td><td>Small, growing</td>
+            <td>Lower-overhead licensing model attracts first-time owners — earlier-stage than Swig/Sodalicious</td>
+            <td>Ingredient partner positioning while the brand builds supplier relationships</td>
+            <td><span class="prio-badge prio-3">Priority 3</span></td>
+          </tr>
+          <tr data-priority="3" data-company="Fixxology" data-hq="Idaho/Wyoming" data-footprint="0">
+            <td><strong>Fixxology</strong></td><td>Idaho/Wyoming (expanding franchise)</td><td>Early-stage franchise</td>
+            <td>Very early-stage — a relationship now could become default as they scale</td>
+            <td>Ground-floor ingredient partner before their supply chain locks in</td>
+            <td><span class="prio-badge prio-3">Priority 3</span></td>
+          </tr>
+          <tr data-priority="1" data-company="Twisted Sugar" data-hq="Layton, UT" data-footprint="30">
+            <td><strong>Twisted Sugar</strong></td><td>Layton, UT (multi-state)</td><td>30+ locations</td>
+            <td>Utah-based, same dual-fit logic as Crumbl — full dirty soda menu alongside scratch-made cookies</td>
+            <td>Real fruit upgrade tier for the soda side, plus a bakery-side pitch in the same conversation</td>
+            <td><span class="prio-badge prio-1">Top target</span></td>
+          </tr>
+          <tr data-priority="2" data-company="Thirst" data-hq="Provo, UT" data-footprint="0">
+            <td><strong>Thirst</strong></td><td>Provo, UT (Utah multi-state)</td><td>Growing, newer entrant</td>
+            <td>Utah-based, expanding fast enough to be opening near existing Swig locations</td>
+            <td>Real fruit differentiation angle while the brand is still building its identity</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="2" data-company="Quench It" data-hq="Utah" data-footprint="0">
+            <td><strong>Quench It</strong></td><td>Utah</td><td>Regional, unconfirmed count</td>
+            <td>Part of the same Utah dirty soda wave as Swig, Sodalicious, and Thirst</td>
+            <td>Real fruit upgrade tier vs. syrup-only menu</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="2" data-company="Ziggi's Coffee" data-hq="Colorado (multi-state)" data-footprint="0">
+            <td><strong>Ziggi's Coffee</strong></td><td>Colorado (multi-state coffee chain)</td><td>Regional coffee chain, growing</td>
+            <td>Coffee-first chain that recently expanded into dirty sodas as a new beverage line — earlier in that transition than Dutch Bros</td>
+            <td>Real fruit positioning for a brand new to the category and still shaping its menu</td>
+            <td><span class="prio-badge prio-2">Priority 2</span></td>
+          </tr>
+          <tr data-priority="3" data-company="Minnie Bird" data-hq="Chicago suburbs, IL" data-footprint="2">
+            <td><strong>Minnie Bird</strong></td><td>Oakbrook/Schaumburg, IL</td><td>2+ locations, expanding</td>
+            <td>Dirty soda + fried chicken concept expanding across Chicago suburbs — also relevant to the Chicago pilot</td>
+            <td>Real fruit upgrade tier; double relevance as a Chicago-market pilot account</td>
+            <td><span class="prio-badge prio-3">Priority 3</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="muted" style="font-size:13px;margin-top:14px;">Swig and Sodalicious are both Utah-based — same state as Citreve — and worth pursuing in person alongside the Chicago outreach, not after it. Twisted Sugar adds a second dual-fit account like Crumbl. Minnie Bird is worth tracking on both this list and the Chicago pilot list, since it's expanding into the same market Citreve is about to visit.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Built from public research — verify against Citreve's existing pipeline before outreach</span>
+    <span class="mono">Presented and prepared by Scott Touchton</span>
+  </div>
+</footer>
+
+<script src="../assets/main.js"></script>
+<script>
+  document.querySelectorAll('.jumpnav-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.jumpnav-btn').forEach(b=>{b.classList.remove('active');b.style.background='';b.style.color='';b.style.borderColor='var(--line)';});
+      btn.classList.add('active');btn.style.background='var(--ink)';btn.style.color='var(--paper)';btn.style.borderColor='var(--ink)';
+    });
+  });
+  document.querySelector('.jumpnav-btn.active').style.background='var(--ink)';
+  document.querySelector('.jumpnav-btn.active').style.color='var(--paper)';
+  document.querySelectorAll('[data-filter-group] .tag').forEach(t=>t.style.cursor='pointer');
+  document.querySelectorAll('[data-filter-group] .tag.active').forEach(t=>{t.style.background='var(--ink)';t.style.color='var(--paper)';});
+  document.querySelectorAll('[data-filter-group]').forEach(group=>{
+    group.querySelectorAll('.tag').forEach(chip=>{
+      chip.addEventListener('click',()=>{
+        group.querySelectorAll('.tag').forEach(c=>{c.classList.remove('active');c.style.background='';c.style.color='';});
+        chip.classList.add('active');chip.style.background='var(--ink)';chip.style.color='var(--paper)';
+      });
+    });
+  });
+</script>
+</body>
+</html>
