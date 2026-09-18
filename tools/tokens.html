@@ -27,7 +27,8 @@ tr:last-child td{border-bottom:none}
 tr:hover td{background:#f7f7f4;cursor:pointer}
 tr.sel td{background:#eaf1fb!important}
 .token-name{font-weight:600;font-size:13px}
-.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:500;white-space:nowrap;line-height:1.5}
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:500;white-space:nowrap;line-height:1.5;text-decoration:none}
+.badge:hover{opacity:0.82}
 .b-yes{background:#eaf3de;color:#3b6d11}
 .b-no{background:#f1efe8;color:#5f5e5a}
 .b-pending{background:#faeeda;color:#854f0b}
@@ -113,90 +114,151 @@ tr.sel td{background:#eaf1fb!important}
 const tokens=[
   {
     id:'GREEN',
-    cmc:'yes',cg:'yes',cmcWarn:'no',cgWarn:'warn',cgWarnDetail:'GoPlus',
-    cmcElev:'yes',cmcBase:'pending',cmcBsc:'pending',
-    logoEther:'yes',logoBase:'pending',logoBsc:'no',
-    baseDate:'7/7/26',bscDate:'7/7/26',logoBaseDate:'7/7/26',
+    cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/green/',
+    cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/green',
+    cmcWarn:'no',cgWarn:'warn',cgWarnDetail:'GoPlus',
+    cmcElev:'yes',elevUrl:'https://elevatescan.io',
+    cmcBase:'pending',baseDate:'7/7/26',
+    cmcBsc:'pending',bscDate:'7/7/26',
+    logoEther:'yes',etherUrl:'https://etherscan.io/token/0xb2089a7069861c8d90c8da3aacab8e9188c0c531',
+    logoBase:'pending',logoBaseDate:'7/7/26',
+    logoBsc:'no',
     notes:'Basescan & BscScan submitted to CMC on 7/7/26. Logo/Basescan submitted 7/7/26. BscScan logo not yet done. CG GoPlus warning active.'
   },
   {
     id:'WIN',
-    cmc:'yes',cg:'yes',cmcWarn:'no',cgWarn:'warn',cgWarnDetail:'GoPlus',
-    cmcElev:'yes',cmcBase:'yes',cmcBsc:'yes',
-    logoEther:'yes',logoBase:'yes',logoBsc:'noaccess',
+    cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/connect-united/',
+    cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/win-3',
+    cmcWarn:'no',cgWarn:'warn',cgWarnDetail:'GoPlus',
+    cmcElev:'yes',elevUrl:'https://elevatescan.io',
+    cmcBase:'yes',baseUrl:'https://basescan.org/token/0xb10cb07ca2cdac77fbb5707f6690301f9d036f45',
+    cmcBsc:'yes',
+    logoEther:'yes',etherUrl:'https://etherscan.io/token/0xb10CB07CA2CDac77FbB5707f6690301f9d036F45',
+    logoBase:'yes',logoBaseUrl:'https://basescan.org/token/0xb10cb07ca2cdac77fbb5707f6690301f9d036f45',
+    logoBsc:'noaccess',
     notes:'Fully listed and CMC explorer links confirmed. No BscScan logo access. CG GoPlus warning active.'
   },
   {
     id:'RALLY',
-    cmc:'yes',cg:'yes',cmcWarn:'no',cgWarn:'pending',cgWarnDetail:'Submitted 6/23/26',
-    cmcElev:'yes',cmcBase:'yes',cmcBsc:'yes',
-    logoEther:'yes',logoBase:'yes',logoBsc:'pending',
-    logoBscDate:'6/17/26',
-    notes:'CG warning submission pending since 6/23/26. BscScan logo submitted 6/17/26 — awaiting approval. Otherwise fully listed.'
+    cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/rally-token/',
+    cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/rally-2',
+    cmcWarn:'no',cgWarn:'pending',cgWarnDetail:'Submitted 6/23/26',
+    cmcElev:'yes',elevUrl:'https://elevatescan.io',
+    cmcBase:'yes',baseUrl:'https://basescan.org/token/0x19640000000ba88d36206BeB10D0e86011C8d08c',
+    cmcBsc:'yes',
+    logoEther:'yes',etherUrl:'https://etherscan.io/token/0x19640000000ba88d36206BeB10D0e86011C8d08c',
+    logoBase:'yes',logoBaseUrl:'https://basescan.org/token/0x19640000000ba88d36206BeB10D0e86011C8d08c',
+    logoBsc:'pending',logoBscDate:'6/17/26',
+    notes:'CG warning submission pending since 6/23/26. BscScan logo submitted 6/17/26 — awaiting approval.'
   },
   {
     id:'GROW',
-    cmc:'yes',cg:'yes',cmcWarn:'no',cgWarn:'warn',cgWarnDetail:'GoPlus',
-    cmcElev:'yes',cmcBase:'yes',cmcBsc:'yes',
-    logoEther:'yes',logoBase:'yes',logoBsc:'noaccess',
+    cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/grow/',
+    cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/grow',
+    cmcWarn:'no',cgWarn:'warn',cgWarnDetail:'GoPlus',
+    cmcElev:'yes',elevUrl:'https://elevatescan.io',
+    cmcBase:'yes',baseUrl:'https://basescan.org/token/0x1223334444A7466fBf985B14E1F4EdAf3883bCa6',
+    cmcBsc:'yes',
+    logoEther:'yes',etherUrl:'https://etherscan.io/token/0x1223334444A7466fBf985B14E1F4EdAf3883bCa6',
+    logoBase:'yes',logoBaseUrl:'https://basescan.org/token/0x1223334444A7466fBf985B14E1F4EdAf3883bCa6',
+    logoBsc:'noaccess',
     notes:'Fully listed. All CMC explorer links confirmed. No BscScan logo access. CG GoPlus warning active.'
   },
   {
     id:'SWITCH',
-    cmc:'yes',cg:'yes',cmcWarn:'no',cgWarn:'no',
-    cmcElev:'yes',cmcBase:'pending',cmcBsc:'pending',
-    logoEther:'yes',logoBase:'yes',logoBsc:'no',
-    baseDate:'7/7/26',bscDate:'7/7/26',
+    cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/switch-reward-card/',
+    cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/switch-token',
+    cmcWarn:'no',cgWarn:'no',
+    cmcElev:'yes',elevUrl:'https://elevatescan.io',
+    cmcBase:'pending',baseDate:'7/7/26',
+    cmcBsc:'pending',bscDate:'7/7/26',
+    logoEther:'yes',etherUrl:'https://etherscan.io/token/0xb10cc888cb2cce7036f4c7ecad8a57da16161338',
+    logoBase:'yes',logoBaseUrl:'https://basescan.org/token/0xb10cc888cb2cce7036f4c7ecad8a57da16161338',
+    logoBsc:'no',
     notes:'Basescan & BscScan submitted to CMC on 7/7/26. Logo updated on Basescan. BscScan logo not done. No warnings — cleanest status.'
   },
   {
     id:'ELMT',
-    cmc:'yes',cg:'yes',cmcWarn:'no',cgWarn:'no',
-    cmcElev:'yes',cmcBase:'yes',cmcBsc:'yes',
-    logoEther:'yes',logoBase:'no',logoBsc:'noaccess',
+    cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/element/',
+    cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/element-2',
+    cmcWarn:'no',cgWarn:'no',
+    cmcElev:'yes',elevUrl:'https://elevatescan.io',
+    cmcBase:'yes',
+    cmcBsc:'yes',
+    logoEther:'yes',etherUrl:'https://etherscan.io/token/0x600D601D8b9EB5DE5Ac90fEfC68d0d08801bFd3f',
+    logoBase:'no',
+    logoBsc:'noaccess',
     notes:'Fully listed on CMC and CG with all explorer links. No warnings. Basescan logo not updated. No BscScan logo access.'
   },
   {
     id:'GALVAN',
-    cmc:'yes',cg:'yes',cmcWarn:'yes',cgWarn:'no',
-    cmcElev:'yes',cmcBase:'no',cmcBsc:'no',
-    logoEther:'yes',logoBase:'no',logoBsc:'no',
+    cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/galvan/',
+    cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/galvan',
+    cmcWarn:'yes',cgWarn:'no',
+    cmcElev:'yes',elevUrl:'https://elevatescan.io',
+    cmcBase:'no',
+    cmcBsc:'no',
+    logoEther:'yes',etherUrl:'https://etherscan.io/token/0xf7e945FcE8F19302AaCc7E1418b0A0bdef89327B',
+    logoBase:'no',
+    logoBsc:'no',
     notes:'CMC warnings present — needs review. No Basescan or BscScan on CMC. Logo only updated on Etherscan.'
   },
   {
     id:'ELEVATE',
-    cmc:'yes',cg:'rejected',cmcWarn:'no',cgWarn:'na',
-    cmcElev:'yes',cmcBase:'pending',cmcBsc:'pending',
-    logoEther:'noaccess',logoBase:'pending',logoBsc:'noaccess',
-    baseDate:'7/7/26',bscDate:'7/7/26',logoBaseDate:'6/16/26',
-    notes:'CG listing rejected — Not Applied. Basescan & BscScan submitted to CMC on 7/7/26. Basescan logo submitted 6/16/26. No Etherscan or BscScan logo access.'
+    cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/elevate-united/',
+    cg:'rejected',
+    cmcWarn:'no',cgWarn:'na',
+    cmcElev:'yes',elevUrl:'https://elevatescan.io',
+    cmcBase:'pending',baseDate:'7/7/26',
+    cmcBsc:'pending',bscDate:'7/7/26',
+    logoEther:'noaccess',
+    logoBase:'pending',logoBaseDate:'6/16/26',
+    logoBsc:'noaccess',
+    notes:'CG listing rejected. Basescan & BscScan submitted to CMC on 7/7/26. Basescan logo submitted 6/16/26. No Etherscan or BscScan logo access.'
   },
   {
     id:'GULD',
-    cmc:'yes',cg:'yes',cmcWarn:'no',cgWarn:'no',
-    cmcElev:'yes',cmcBase:'yes',cmcBsc:'yes',
-    logoEther:'yes',logoBase:'noaccess',logoBsc:'noaccess',
+    cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/adventurewurld/',
+    cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/guld',
+    cmcWarn:'no',cgWarn:'no',
+    cmcElev:'yes',elevUrl:'https://elevatescan.io',
+    cmcBase:'yes',
+    cmcBsc:'yes',
+    logoEther:'yes',etherUrl:'https://etherscan.io/token/0x14d6c649292c5c9790c5196d1a9ea039307947a1',
+    logoBase:'noaccess',
+    logoBsc:'noaccess',
     notes:'Fully listed, all CMC explorer links confirmed. No warnings. No logo access on Basescan or BscScan.'
   },
   {
     id:'GIVE',
-    cmc:'yes',cg:'no',cmcWarn:'no',cgWarn:'na',
-    cmcElev:'pending',cmcBase:'yes',cmcBsc:'pending',
-    logoEther:'yes',logoBase:'yes',logoBsc:'noaccess',
-    elevDate:'6/19/26',bscDate:'6/19/26',
+    cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/give/',
+    cg:'no',
+    cmcWarn:'no',cgWarn:'na',
+    cmcElev:'pending',elevDate:'6/19/26',
+    cmcBase:'yes',baseUrl:'https://basescan.org/token/0x95669a6589a81a6704bab1020722d0c405841885',
+    cmcBsc:'pending',bscDate:'6/19/26',
+    logoEther:'yes',etherUrl:'https://etherscan.io/token/0x95669A6589A81A6704bab1020722d0C405841885',
+    logoBase:'yes',logoBaseUrl:'https://basescan.org/token/0x95669a6589a81a6704bab1020722d0c405841885',
+    logoBsc:'noaccess',
     notes:'CG listing not applied for. ElevateScan & BscScan submitted to CMC on 6/19/26 — pending. Basescan confirmed. No BscScan logo access.'
   },
   {
     id:'LIBERTY',
-    cmc:'no',cg:'no',cmcWarn:'na',cgWarn:'na',
+    cmc:'no',cmcUrl:'https://dex.coinmarketcap.com/token/ethereum/0x177600000c8aaab0cb3c3c030fb5d0ecd9d37390/',
+    cg:'no',
+    cmcWarn:'na',cgWarn:'na',
     cmcElev:'na',cmcBase:'na',cmcBsc:'na',
     logoEther:'no',logoBase:'no',logoBsc:'noaccess',
-    notes:'Not yet listed on CMC or CG. No explorer links. No logo work done. Full listing process needs to be initiated.'
+    notes:'Not yet listed on CMC or CG. No explorer links. No logo work done. Full listing process needs to be initiated. CMC DEX link exists.'
   },
   {
     id:'CODEX',
-    cmc:'yes',cg:'no',cmcWarn:'no',cgWarn:'na',
-    cmcElev:'yes',cmcBase:'yes',cmcBsc:'yes',
+    cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/codexblockchain/',
+    cg:'no',
+    cmcWarn:'no',cgWarn:'na',
+    cmcElev:'yes',elevUrl:'https://elevatescan.io',
+    cmcBase:'yes',
+    cmcBsc:'yes',
     logoEther:'noaccess',logoBase:'noaccess',logoBsc:'noaccess',
     notes:'CMC listed with all explorer links. CG not yet listed. No logo access on any explorer.'
   },
@@ -217,20 +279,23 @@ function score(t){
   return Math.max(0,Math.min(1,s/tot));
 }
 
-function badge(val,detail){
-  if(!val||val===''||val==='—') return '<span class="badge b-na">—</span>';
+function badge(val, url, detail){
+  if(!val||val==='—') return '<span class="badge b-na">—</span>';
   const v=String(val).toLowerCase().trim();
-  if(v==='yes') return '<span class="badge b-yes">Yes</span>';
-  if(v==='no') return '<span class="badge b-no">No</span>';
-  if(v==='na') return '<span class="badge b-na">N/A</span>';
-  if(v==='noaccess') return '<span class="badge b-noaccess">No access</span>';
-  if(v==='rejected') return '<span class="badge b-rejected">Rejected</span>';
-  if(v==='pending') {
-    const d=detail?` ${detail}`:'';
-    return `<span class="badge b-pending">Submitted${d}</span>`;
+  let cls, label;
+  if(v==='yes'){ cls='b-yes'; label='Yes'; }
+  else if(v==='no'){ cls='b-no'; label='No'; }
+  else if(v==='na'){ cls='b-na'; label='N/A'; }
+  else if(v==='noaccess'){ cls='b-noaccess'; label='No access'; }
+  else if(v==='rejected'){ cls='b-rejected'; label='Rejected'; }
+  else if(v==='pending'){ cls='b-pending'; label=detail?`Submitted ${detail}`:'Submitted'; }
+  else if(v==='warn'){ cls='b-warn'; label=detail||'Warning'; }
+  else { cls='b-pending'; label=val; }
+
+  if(url && (v==='yes'||v==='no')){
+    return `<a href="${url}" target="_blank" rel="noopener" class="badge ${cls}">${label} ↗</a>`;
   }
-  if(v==='warn') return `<span class="badge b-warn">${detail||'Warning'}</span>`;
-  return `<span class="badge b-pending">${val}</span>`;
+  return `<span class="badge ${cls}">${label}</span>`;
 }
 
 function pctColor(p){return p>=80?'#639922':p>=50?'#ba7517':'#a32d2d';}
@@ -268,16 +333,16 @@ function renderTable(){
     const sel=activeId===t.id?'sel':'';
     return `<tr class="${sel}" onclick="toggleDetail('${t.id}')">
       <td><span class="token-name">${t.id}</span></td>
-      <td>${badge(t.cmc)}</td>
-      <td>${badge(t.cg==='rejected'?'rejected':t.cg)}</td>
-      <td class="col-divider">${badge(t.cmcWarn==='yes'?'warn':t.cmcWarn, t.cmcWarn==='yes'?'Yes':'')}</td>
-      <td>${badge(t.cgWarn,t.cgWarnDetail)}</td>
-      <td class="col-divider">${badge(t.cmcElev,t.elevDate)}</td>
-      <td>${badge(t.cmcBase,t.baseDate)}</td>
-      <td>${badge(t.cmcBsc,t.bscDate)}</td>
-      <td class="col-divider">${badge(t.logoEther)}</td>
-      <td>${badge(t.logoBase,t.logoBaseDate)}</td>
-      <td>${badge(t.logoBsc,t.logoBscDate)}</td>
+      <td>${badge(t.cmc,t.cmcUrl)}</td>
+      <td>${badge(t.cg==='rejected'?'rejected':t.cg,t.cgUrl)}</td>
+      <td class="col-divider">${badge(t.cmcWarn==='yes'?'warn':t.cmcWarn,null,t.cmcWarn==='yes'?'Active':'')}</td>
+      <td>${badge(t.cgWarn,null,t.cgWarnDetail)}</td>
+      <td class="col-divider">${badge(t.cmcElev,t.elevUrl,t.elevDate)}</td>
+      <td>${badge(t.cmcBase,t.baseUrl,t.baseDate)}</td>
+      <td>${badge(t.cmcBsc,null,t.bscDate)}</td>
+      <td class="col-divider">${badge(t.logoEther,t.etherUrl)}</td>
+      <td>${badge(t.logoBase,t.logoBaseUrl,t.logoBaseDate)}</td>
+      <td>${badge(t.logoBsc,null,t.logoBscDate)}</td>
       <td>
         <div class="prog-wrap">
           <div class="bar-wrap"><div class="bar-fill" style="width:${p}%;background:${col}"></div></div>
@@ -303,25 +368,25 @@ function toggleDetail(id){
     <div class="detail-sections">
       <div class="dsec">
         <h3>Exchange listings</h3>
-        <div class="drow"><span>CoinMarketCap</span>${badge(t.cmc)}</div>
-        <div class="drow"><span>CoinGecko</span>${badge(t.cg==='rejected'?'rejected':t.cg)}</div>
+        <div class="drow"><span>CoinMarketCap</span>${badge(t.cmc,t.cmcUrl)}</div>
+        <div class="drow"><span>CoinGecko</span>${badge(t.cg==='rejected'?'rejected':t.cg,t.cgUrl)}</div>
       </div>
       <div class="dsec">
         <h3>Warnings</h3>
-        <div class="drow"><span>CMC warnings</span>${badge(t.cmcWarn==='yes'?'warn':t.cmcWarn,t.cmcWarn==='yes'?'Active':'')}</div>
-        <div class="drow"><span>CG warnings</span>${badge(t.cgWarn,t.cgWarnDetail)}</div>
+        <div class="drow"><span>CMC warnings</span>${badge(t.cmcWarn==='yes'?'warn':t.cmcWarn,null,t.cmcWarn==='yes'?'Active':'')}</div>
+        <div class="drow"><span>CG warnings</span>${badge(t.cgWarn,null,t.cgWarnDetail)}</div>
       </div>
       <div class="dsec">
         <h3>On CMC — explorer links</h3>
-        <div class="drow"><span>ElevateScan</span>${badge(t.cmcElev,t.elevDate)}</div>
-        <div class="drow"><span>Basescan</span>${badge(t.cmcBase,t.baseDate)}</div>
-        <div class="drow"><span>BscScan</span>${badge(t.cmcBsc,t.bscDate)}</div>
+        <div class="drow"><span>ElevateScan</span>${badge(t.cmcElev,t.elevUrl,t.elevDate)}</div>
+        <div class="drow"><span>Basescan</span>${badge(t.cmcBase,t.baseUrl,t.baseDate)}</div>
+        <div class="drow"><span>BscScan</span>${badge(t.cmcBsc,null,t.bscDate)}</div>
       </div>
       <div class="dsec">
         <h3>Logo / branding updated</h3>
-        <div class="drow"><span>Etherscan</span>${badge(t.logoEther)}</div>
-        <div class="drow"><span>Basescan</span>${badge(t.logoBase,t.logoBaseDate)}</div>
-        <div class="drow"><span>BscScan</span>${badge(t.logoBsc,t.logoBscDate)}</div>
+        <div class="drow"><span>Etherscan</span>${badge(t.logoEther,t.etherUrl)}</div>
+        <div class="drow"><span>Basescan</span>${badge(t.logoBase,t.logoBaseUrl,t.logoBaseDate)}</div>
+        <div class="drow"><span>BscScan</span>${badge(t.logoBsc,null,t.logoBscDate)}</div>
       </div>
     </div>
     <div style="margin-top:14px;display:flex;align-items:center;gap:10px">
