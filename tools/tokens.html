@@ -38,7 +38,7 @@ tr.sel td{background:#eaf1fb!important}
 .b-rejected{background:#fcebeb;color:#a32d2d}
 .bar-wrap{background:#ebebea;border-radius:4px;height:5px;width:50px;display:inline-block;vertical-align:middle}
 .bar-fill{height:5px;border-radius:4px}
-.detail{background:#fff;border:0.5px solid #e0e0dc;border-radius:12px;padding:16px 20px;margin-top:12px;display:none}
+.detail{background:#fff;border:0.5px solid #e0e0dc;border-radius:12px;padding:16px 20px;margin-top:12px}
 .detail h2{font-size:15px;font-weight:500;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
 .detail-sections{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
 .dsec h3{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;padding-bottom:4px;border-bottom:0.5px solid #eee}
@@ -49,6 +49,21 @@ tr.sel td{background:#eaf1fb!important}
 .close-x{background:none;border:none;font-size:20px;color:#999;cursor:pointer;line-height:1;padding:0}
 .prog-wrap{display:flex;align-items:center;gap:5px}
 .col-divider{border-left:1.5px solid #e8e8e4!important}
+
+/* Contract address section */
+.contracts-section{margin-top:28px}
+.contracts-section h2{font-size:15px;font-weight:500;margin-bottom:12px;color:#1a1a1a}
+.contracts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px}
+.contract-card{background:#fff;border:0.5px solid #e0e0dc;border-radius:10px;padding:12px 14px}
+.contract-card-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.contract-token{font-weight:600;font-size:13px}
+.contract-ticker{font-size:11px;color:#888}
+.contract-addr{font-family:'SF Mono',SFMono-Regular,ui-monospace,Menlo,monospace;font-size:11px;color:#444;background:#f5f5f2;padding:5px 8px;border-radius:6px;word-break:break-all;line-height:1.5;cursor:pointer;border:0.5px solid #e8e8e4;display:block;width:100%}
+.contract-addr:hover{background:#eaf3de;border-color:#b5d98a}
+.contract-links{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
+.contract-link{font-size:11px;color:#185fa5;text-decoration:none;padding:2px 7px;border-radius:4px;border:0.5px solid #cce0f5;background:#f0f7fd}
+.contract-link:hover{background:#dceefb}
+.copy-tip{font-size:10px;color:#aaa;margin-top:5px}
 </style>
 </head>
 <body>
@@ -108,12 +123,20 @@ tr.sel td{background:#eaf1fb!important}
   </table>
 </div>
 
-<div class="detail" id="detail-panel"></div>
+<div class="detail" id="detail-panel" style="display:none"></div>
+
+<!-- Contract addresses -->
+<div class="contracts-section">
+  <h2>📋 Contract addresses</h2>
+  <p style="font-size:12px;color:#888;margin-bottom:12px">Click any address to copy. Links open the contract on each explorer.</p>
+  <div class="contracts-grid" id="contracts-grid"></div>
+</div>
 
 <script>
 const tokens=[
   {
-    id:'GREEN',
+    id:'GREEN', ticker:'GREEN',
+    contract:'0xb2089a7069861c8d90c8da3aacab8e9188c0c531',
     cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/green/',
     cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/green',
     cmcWarn:'no',cgWarn:'warn',cgWarnDetail:'GoPlus',
@@ -126,7 +149,8 @@ const tokens=[
     notes:'Basescan & BscScan submitted to CMC on 7/7/26. Logo/Basescan submitted 7/7/26. BscScan logo not yet done. CG GoPlus warning active.'
   },
   {
-    id:'WIN',
+    id:'WIN', ticker:'WIN',
+    contract:'0xb10CB07CA2CDac77FbB5707f6690301f9d036F45',
     cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/connect-united/',
     cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/win-3',
     cmcWarn:'no',cgWarn:'warn',cgWarnDetail:'GoPlus',
@@ -139,7 +163,8 @@ const tokens=[
     notes:'Fully listed and CMC explorer links confirmed. No BscScan logo access. CG GoPlus warning active.'
   },
   {
-    id:'RALLY',
+    id:'RALLY', ticker:'RALLY',
+    contract:'0x19640000000ba88d36206BeB10D0e86011C8d08c',
     cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/rally-token/',
     cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/rally-2',
     cmcWarn:'no',cgWarn:'pending',cgWarnDetail:'Submitted 6/23/26',
@@ -152,7 +177,8 @@ const tokens=[
     notes:'CG warning submission pending since 6/23/26. BscScan logo submitted 6/17/26 — awaiting approval.'
   },
   {
-    id:'GROW',
+    id:'GROW', ticker:'GROW',
+    contract:'0x1223334444A7466fBf985B14E1F4EdAf3883bCa6',
     cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/grow/',
     cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/grow',
     cmcWarn:'no',cgWarn:'warn',cgWarnDetail:'GoPlus',
@@ -165,7 +191,8 @@ const tokens=[
     notes:'Fully listed. All CMC explorer links confirmed. No BscScan logo access. CG GoPlus warning active.'
   },
   {
-    id:'SWITCH',
+    id:'SWITCH', ticker:'SWITCH',
+    contract:'0xb10cc888cb2cce7036f4c7ecad8a57da16161338',
     cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/switch-reward-card/',
     cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/switch-token',
     cmcWarn:'no',cgWarn:'no',
@@ -175,36 +202,35 @@ const tokens=[
     logoEther:'yes',etherUrl:'https://etherscan.io/token/0xb10cc888cb2cce7036f4c7ecad8a57da16161338',
     logoBase:'yes',logoBaseUrl:'https://basescan.org/token/0xb10cc888cb2cce7036f4c7ecad8a57da16161338',
     logoBsc:'no',
-    notes:'Basescan & BscScan submitted to CMC on 7/7/26. Logo updated on Basescan. BscScan logo not done. No warnings — cleanest status.'
+    notes:'Basescan & BscScan submitted to CMC on 7/7/26. Logo updated on Basescan. BscScan logo not done. No warnings.'
   },
   {
-    id:'ELMT',
+    id:'ELMT', ticker:'ELMT',
+    contract:'0x600D601D8b9EB5DE5Ac90fEfC68d0d08801bFd3f',
     cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/element/',
     cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/element-2',
     cmcWarn:'no',cgWarn:'no',
     cmcElev:'yes',elevUrl:'https://elevatescan.io',
-    cmcBase:'yes',
-    cmcBsc:'yes',
+    cmcBase:'yes',cmcBsc:'yes',
     logoEther:'yes',etherUrl:'https://etherscan.io/token/0x600D601D8b9EB5DE5Ac90fEfC68d0d08801bFd3f',
-    logoBase:'no',
-    logoBsc:'noaccess',
+    logoBase:'no',logoBsc:'noaccess',
     notes:'Fully listed on CMC and CG with all explorer links. No warnings. Basescan logo not updated. No BscScan logo access.'
   },
   {
-    id:'GALVAN',
+    id:'GALVAN', ticker:'GALVAN',
+    contract:'0xf7e945FcE8F19302AaCc7E1418b0A0bdef89327B',
     cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/galvan/',
     cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/galvan',
     cmcWarn:'yes',cgWarn:'no',
     cmcElev:'yes',elevUrl:'https://elevatescan.io',
-    cmcBase:'no',
-    cmcBsc:'no',
+    cmcBase:'no',cmcBsc:'no',
     logoEther:'yes',etherUrl:'https://etherscan.io/token/0xf7e945FcE8F19302AaCc7E1418b0A0bdef89327B',
-    logoBase:'no',
-    logoBsc:'no',
+    logoBase:'no',logoBsc:'no',
     notes:'CMC warnings present — needs review. No Basescan or BscScan on CMC. Logo only updated on Etherscan.'
   },
   {
-    id:'ELEVATE',
+    id:'ELEVATE', ticker:'ELEVATE',
+    contract:'0x888888888887715FB9D9F84175Af9e6cCE46807e',
     cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/elevate-united/',
     cg:'rejected',
     cmcWarn:'no',cgWarn:'na',
@@ -217,20 +243,20 @@ const tokens=[
     notes:'CG listing rejected. Basescan & BscScan submitted to CMC on 7/7/26. Basescan logo submitted 6/16/26. No Etherscan or BscScan logo access.'
   },
   {
-    id:'GULD',
+    id:'GULD', ticker:'GULD',
+    contract:'0x14d6c649292c5c9790c5196d1a9ea039307947a1',
     cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/adventurewurld/',
     cg:'yes',cgUrl:'https://www.coingecko.com/en/coins/guld',
     cmcWarn:'no',cgWarn:'no',
     cmcElev:'yes',elevUrl:'https://elevatescan.io',
-    cmcBase:'yes',
-    cmcBsc:'yes',
+    cmcBase:'yes',cmcBsc:'yes',
     logoEther:'yes',etherUrl:'https://etherscan.io/token/0x14d6c649292c5c9790c5196d1a9ea039307947a1',
-    logoBase:'noaccess',
-    logoBsc:'noaccess',
+    logoBase:'noaccess',logoBsc:'noaccess',
     notes:'Fully listed, all CMC explorer links confirmed. No warnings. No logo access on Basescan or BscScan.'
   },
   {
-    id:'GIVE',
+    id:'GIVE', ticker:'GIVE',
+    contract:'0x95669A6589A81A6704bab1020722d0C405841885',
     cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/give/',
     cg:'no',
     cmcWarn:'no',cgWarn:'na',
@@ -243,7 +269,8 @@ const tokens=[
     notes:'CG listing not applied for. ElevateScan & BscScan submitted to CMC on 6/19/26 — pending. Basescan confirmed. No BscScan logo access.'
   },
   {
-    id:'LIBERTY',
+    id:'LIBERTY', ticker:'LIBERTY',
+    contract:'0x177600000c8aaab0cb3c3c030fb5d0ecd9d37390',
     cmc:'no',cmcUrl:'https://dex.coinmarketcap.com/token/ethereum/0x177600000c8aaab0cb3c3c030fb5d0ecd9d37390/',
     cg:'no',
     cmcWarn:'na',cgWarn:'na',
@@ -252,13 +279,13 @@ const tokens=[
     notes:'Not yet listed on CMC or CG. No explorer links. No logo work done. Full listing process needs to be initiated. CMC DEX link exists.'
   },
   {
-    id:'CODEX',
+    id:'CODEX', ticker:'CDXR',
+    contract:'0x40AAf75454036Bed56F3266cCf18f6b7befd6Aca',
     cmc:'yes',cmcUrl:'https://coinmarketcap.com/currencies/codexblockchain/',
     cg:'no',
     cmcWarn:'no',cgWarn:'na',
     cmcElev:'yes',elevUrl:'https://elevatescan.io',
-    cmcBase:'yes',
-    cmcBsc:'yes',
+    cmcBase:'yes',cmcBsc:'yes',
     logoEther:'noaccess',logoBase:'noaccess',logoBsc:'noaccess',
     notes:'CMC listed with all explorer links. CG not yet listed. No logo access on any explorer.'
   },
@@ -279,20 +306,19 @@ function score(t){
   return Math.max(0,Math.min(1,s/tot));
 }
 
-function badge(val, url, detail){
+function badge(val,url,detail){
   if(!val||val==='—') return '<span class="badge b-na">—</span>';
   const v=String(val).toLowerCase().trim();
-  let cls, label;
-  if(v==='yes'){ cls='b-yes'; label='Yes'; }
-  else if(v==='no'){ cls='b-no'; label='No'; }
-  else if(v==='na'){ cls='b-na'; label='N/A'; }
-  else if(v==='noaccess'){ cls='b-noaccess'; label='No access'; }
-  else if(v==='rejected'){ cls='b-rejected'; label='Rejected'; }
-  else if(v==='pending'){ cls='b-pending'; label=detail?`Submitted ${detail}`:'Submitted'; }
-  else if(v==='warn'){ cls='b-warn'; label=detail||'Warning'; }
-  else { cls='b-pending'; label=val; }
-
-  if(url && (v==='yes'||v==='no')){
+  let cls,label;
+  if(v==='yes'){cls='b-yes';label='Yes';}
+  else if(v==='no'){cls='b-no';label='No';}
+  else if(v==='na'){cls='b-na';label='N/A';}
+  else if(v==='noaccess'){cls='b-noaccess';label='No access';}
+  else if(v==='rejected'){cls='b-rejected';label='Rejected';}
+  else if(v==='pending'){cls='b-pending';label=detail?`Submitted ${detail}`:'Submitted';}
+  else if(v==='warn'){cls='b-warn';label=detail||'Warning';}
+  else{cls='b-pending';label=val;}
+  if(url&&(v==='yes'||v==='no')){
     return `<a href="${url}" target="_blank" rel="noopener" class="badge ${cls}">${label} ↗</a>`;
   }
   return `<span class="badge ${cls}">${label}</span>`;
@@ -343,12 +369,7 @@ function renderTable(){
       <td class="col-divider">${badge(t.logoEther,t.etherUrl)}</td>
       <td>${badge(t.logoBase,t.logoBaseUrl,t.logoBaseDate)}</td>
       <td>${badge(t.logoBsc,null,t.logoBscDate)}</td>
-      <td>
-        <div class="prog-wrap">
-          <div class="bar-wrap"><div class="bar-fill" style="width:${p}%;background:${col}"></div></div>
-          <span style="font-size:11px;color:#888">${p}%</span>
-        </div>
-      </td>
+      <td><div class="prog-wrap"><div class="bar-wrap"><div class="bar-fill" style="width:${p}%;background:${col}"></div></div><span style="font-size:11px;color:#888">${p}%</span></div></td>
     </tr>`;
   }).join('');
   document.getElementById('filter-count').textContent=
@@ -364,7 +385,7 @@ function toggleDetail(id){
   const panel=document.getElementById('detail-panel');
   panel.style.display='block';
   panel.innerHTML=`
-    <h2>${t.id} — detail <button class="close-x" onclick="closeDetail()" aria-label="Close">×</button></h2>
+    <h2>${t.id} — detail <button class="close-x" onclick="closeDetail()">×</button></h2>
     <div class="detail-sections">
       <div class="dsec">
         <h3>Exchange listings</h3>
@@ -395,6 +416,11 @@ function toggleDetail(id){
       <span style="font-size:13px;font-weight:500">${p}%</span>
     </div>
     <div class="notes-box">📝 ${t.notes}</div>
+    <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid #eee">
+      <span style="font-size:11px;color:#888">Contract: </span>
+      <code style="font-size:11px;background:#f5f5f2;padding:2px 6px;border-radius:4px;cursor:pointer" onclick="copyAddr('${t.contract}',this)">${t.contract}</code>
+      <span style="font-size:11px;color:#aaa;margin-left:6px">click to copy</span>
+    </div>
   `;
   renderTable();
   panel.scrollIntoView({behavior:'smooth',block:'nearest'});
@@ -432,8 +458,37 @@ function resetFilters(){
   closeDetail();
 }
 
+function copyAddr(addr, el){
+  navigator.clipboard.writeText(addr).then(()=>{
+    const orig=el.textContent;
+    el.textContent='Copied!';
+    el.style.background='#eaf3de';
+    setTimeout(()=>{el.textContent=orig;el.style.background='';},1500);
+  });
+}
+
+function renderContracts(){
+  document.getElementById('contracts-grid').innerHTML=tokens.map(t=>{
+    const ethLink=t.etherUrl?`<a href="${t.etherUrl}" target="_blank" rel="noopener" class="contract-link">Etherscan ↗</a>`:'';
+    const baseLink=t.baseUrl||t.logoBaseUrl?`<a href="${t.baseUrl||t.logoBaseUrl}" target="_blank" rel="noopener" class="contract-link">Basescan ↗</a>`:'';
+    const cmcLink=t.cmcUrl?`<a href="${t.cmcUrl}" target="_blank" rel="noopener" class="contract-link">CMC ↗</a>`:'';
+    const cgLink=t.cgUrl?`<a href="${t.cgUrl}" target="_blank" rel="noopener" class="contract-link">CoinGecko ↗</a>`:'';
+    return `
+      <div class="contract-card">
+        <div class="contract-card-top">
+          <span class="contract-token">${t.id}</span>
+          <span class="contract-ticker">${t.ticker!==t.id?t.ticker:''}</span>
+        </div>
+        <code class="contract-addr" onclick="copyAddr('${t.contract}',this)" title="Click to copy">${t.contract}</code>
+        <p class="copy-tip">click to copy</p>
+        <div class="contract-links">${ethLink}${baseLink}${cmcLink}${cgLink}</div>
+      </div>`;
+  }).join('');
+}
+
 renderSummary();
 renderTable();
+renderContracts();
 </script>
 </body>
 </html>
