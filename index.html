@@ -1,212 +1,932 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scott Touchton</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <title>Scott Touchton — Product Marketing & GTM Strategy</title>
+  <meta name="description" content="Scott Touchton is a New Orleans-based product marketing and GTM strategist — operations leader, communications strategist, storyteller, and technology consultant."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --paper:#F2EFE8;
+      --paper-2:#EAE7DF;
+      --ink:#191917;
+      --ink-2:#48483F;
+      --ink-3:#898980;
+      --red:#B83030;
+      --red-dim:#8C2222;
+      --rule:#CCC9C0;
+      --serif:'Playfair Display',Georgia,serif;
+      --sans:'DM Sans',system-ui,sans-serif;
+      --gutter:clamp(1.25rem,5vw,4.5rem);
+      --col:1100px;
+    }
+    html{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;font-size:16px;line-height:1.6;scroll-behavior:smooth;scroll-padding-top:3.25rem;-webkit-font-smoothing:antialiased}
+    body{overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%;height:auto}
 
-    :root {
-      --bg:       #0D1117;
-      --surface:  #13191F;
-      --text:     #E8E6E1;
-      --muted:    #7A7570;
-      --gold:     #B8976A;
-      --gold-dim: #7A6245;
+    /* ── NAV ── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:300;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 var(--gutter);height:3.25rem;
+      background:rgba(242,239,232,0.93);
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      border-bottom:1px solid transparent;transition:border-color .3s;
+    }
+    nav.scrolled{border-bottom-color:var(--rule)}
+    .nav-logo{font-family:var(--serif);font-size:1rem;font-weight:700;letter-spacing:-.01em;flex-shrink:0}
+    .nav-links{display:flex;gap:1.75rem;list-style:none}
+    .nav-links a{font-size:.78rem;color:var(--ink-2);letter-spacing:.02em;transition:color .15s}
+    .nav-links a:hover{color:var(--red)}
+    .nav-hamburger{display:none;flex-direction:column;gap:5px;width:2.2rem;height:2.2rem;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:.3rem}
+    .nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--ink);transition:transform .25s,opacity .25s}
+    .nav-hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .nav-hamburger[aria-expanded="true"] span:nth-child(2){opacity:0}
+    .nav-hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    .nav-drawer{display:none;position:fixed;top:3.25rem;left:0;right:0;z-index:299;background:var(--paper);border-bottom:1px solid var(--rule);padding:1rem var(--gutter) 1.5rem;flex-direction:column}
+    .nav-drawer.open{display:flex}
+    .nav-drawer a{font-size:1rem;color:var(--ink-2);padding:.75rem 0;border-bottom:1px solid var(--rule);transition:color .15s}
+    .nav-drawer a:last-child{border-bottom:none}
+    .nav-drawer a:hover{color:var(--red)}
+    @media(max-width:720px){.nav-links{display:none}.nav-hamburger{display:flex}}
+
+    /* ── HERO: editorial split ── */
+    #hero{
+      padding-top:3.25rem;
+      display:grid;
+      grid-template-columns:1.05fr 0.95fr;
+      min-height:100svh;
     }
 
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-weight: 300;
-      -webkit-font-smoothing: antialiased;
+    /* Left: photo mosaic */
+    .hero-mosaic{
+      position:relative;
+      overflow:hidden;
+      background:var(--ink);
+    }
+    .mosaic-grid{
+      position:absolute;inset:0;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      grid-template-rows:1fr 1fr;
+      gap:2px;
+      background:#111;
+    }
+    .mosaic-cell{overflow:hidden;position:relative}
+    .mosaic-cell img{
+      width:100%;height:100%;
+      object-fit:cover;
+      transition:transform .5s ease;
+      display:block;
+    }
+    .mosaic-cell:hover img{transform:scale(1.04)}
+    .mosaic-label{
+      position:absolute;bottom:0;left:0;right:0;
+      padding:.5rem .65rem;
+      background:linear-gradient(to top,rgba(25,25,23,.7) 0%,transparent 100%);
+      font-size:.6rem;font-weight:500;
+      letter-spacing:.1em;color:rgba(242,239,232,.55);
+      font-family:var(--sans);font-style:italic;
+      pointer-events:none;
     }
 
-    body {
+    /* Right: editorial text panel */
+    .hero-text{
+      display:flex;flex-direction:column;justify-content:space-between;
+      padding:clamp(2rem,5vw,4rem) clamp(1.5rem,4vw,3.5rem);
+      background:var(--paper);
+      border-left:1px solid var(--rule);
+    }
+    .hero-masthead{
+      padding-bottom:1.5rem;
+      border-bottom:1px solid var(--rule);
+      margin-bottom:1.75rem;
+    }
+    .hero-masthead-top{
+      display:flex;justify-content:space-between;
+      align-items:baseline;
+      margin-bottom:.35rem;
+    }
+    .hero-edition{font-size:.65rem;color:var(--ink-3);font-style:italic;letter-spacing:.06em}
+    .hero-location{font-size:.65rem;color:var(--red);letter-spacing:.1em;font-style:italic}
+
+    h1.hero-headline{
+      font-family:var(--serif);
+      font-size:clamp(2.4rem,4.5vw,3.8rem);
+      font-weight:900;line-height:.95;
+      letter-spacing:-.03em;color:var(--ink);
+      margin-bottom:1.25rem;
+    }
+    h1.hero-headline em{font-style:italic;font-weight:400;color:var(--red)}
+
+    .hero-deck{
+      font-size:.95rem;line-height:1.78;color:var(--ink-2);
+      max-width:44ch;margin-bottom:2rem;
+    }
+
+    .hero-ctas{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
+    .btn{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--sans);font-size:.78rem;font-weight:500;letter-spacing:.04em;padding:.65rem 1.3rem;transition:background .18s,color .18s,border-color .18s;white-space:nowrap}
+    .btn-red{background:var(--red);color:var(--paper)}
+    .btn-red:hover{background:var(--red-dim)}
+    .btn-outline{border:1px solid var(--rule);color:var(--ink-2)}
+    .btn-outline:hover{border-color:var(--red);color:var(--red)}
+
+    /* In-the-record list */
+    .hero-record{border-top:1px solid var(--rule);padding-top:1.25rem}
+    .hero-record-label{font-size:.62rem;letter-spacing:.14em;color:var(--ink-3);font-style:italic;margin-bottom:.85rem}
+    .record-items{display:flex;flex-direction:column;gap:0}
+    .record-item{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:.65rem 0;border-bottom:1px solid var(--rule);
+    }
+    .record-item:last-child{border-bottom:none}
+    .record-title{font-family:var(--serif);font-size:.88rem;font-style:italic;color:var(--ink)}
+    .record-tag{font-size:.62rem;color:var(--red);letter-spacing:.06em;white-space:nowrap;margin-left:.75rem}
+
+    /* ── TICKER ── */
+    .ticker{background:var(--red);overflow:hidden;padding:.55rem 0;white-space:nowrap}
+    .ticker-track{display:inline-flex;animation:ticker-scroll 36s linear infinite}
+    .ticker-track:hover{animation-play-state:paused}
+    .ticker-item{font-family:var(--serif);font-size:.78rem;font-style:italic;color:rgba(242,239,232,.82);padding:0 2rem}
+    .ticker-sep{color:rgba(242,239,232,.3)}
+    @keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* ── SECTION SHARED ── */
+    .section{padding:clamp(3.5rem,8vw,6rem) var(--gutter)}
+    .section-inner{max-width:var(--col);margin:0 auto}
+    .section-eyebrow{
+      font-size:.65rem;font-weight:500;letter-spacing:.16em;
+      color:var(--ink-3);font-style:italic;margin-bottom:1.75rem;
+      display:flex;align-items:center;gap:.75rem;
+    }
+    .section-eyebrow::after{content:'';flex:1;max-width:3rem;height:1px;background:var(--rule)}
+
+    /* ── FEATURED WORK ── */
+    #work{background:var(--paper-2)}
+
+    .work-intro{
+      font-family:var(--serif);
+      font-size:clamp(1.4rem,2.8vw,1.9rem);
+      font-weight:700;line-height:1.15;
+      letter-spacing:-.02em;color:var(--ink);
+      max-width:32ch;margin-bottom:2.5rem;
+    }
+    .work-intro em{font-style:italic;font-weight:400;color:var(--red)}
+
+    /* Project 1 — L2E: large, text right */
+    .project-lead{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:0;
+      background:var(--paper);
+      border:1px solid var(--rule);
+      margin-bottom:2px;
+      overflow:hidden;
+    }
+    .project-lead.flip{direction:rtl}
+    .project-lead.flip>*{direction:ltr}
+
+    .project-visual{
+      position:relative;overflow:hidden;
+      min-height:320px;
+      background:var(--ink);
+    }
+    .project-visual img{
+      width:100%;height:100%;
+      object-fit:cover;
+      display:block;
+      transition:transform .5s ease;
+    }
+    .project-lead:hover .project-visual img{transform:scale(1.03)}
+
+    .project-vis-label{
+      position:absolute;top:.85rem;left:.85rem;
+      font-size:.6rem;font-weight:500;letter-spacing:.1em;
+      color:rgba(242,239,232,.45);font-family:var(--sans);font-style:italic;
+    }
+
+    .project-body{
+      padding:2.25rem 2.5rem;
+      display:flex;flex-direction:column;justify-content:center;gap:.85rem;
+      border-left:1px solid var(--rule);
+    }
+    .project-lead.flip .project-body{border-left:none;border-right:1px solid var(--rule)}
+
+    .project-tag{font-size:.62rem;font-weight:500;letter-spacing:.12em;color:var(--red);font-style:italic}
+    .project-name{font-family:var(--serif);font-size:1.55rem;font-weight:700;line-height:1.15;color:var(--ink)}
+    .project-desc{font-size:.88rem;line-height:1.75;color:var(--ink-2);max-width:44ch}
+    .project-chips{display:flex;flex-wrap:wrap;gap:.4rem}
+    .chip{font-size:.62rem;font-weight:500;letter-spacing:.05em;color:var(--ink-3);border:1px solid var(--rule);padding:.2rem .55rem}
+
+    .project-stat{
+      padding-top:.85rem;
+      border-top:1px solid var(--rule);
+      display:grid;grid-template-columns:1fr 1fr;gap:.75rem;
+    }
+    .stat-block{}
+    .stat-num{font-family:var(--serif);font-size:1.6rem;font-weight:900;line-height:1;color:var(--ink)}
+    .stat-num sup{font-size:.5em;color:var(--red);vertical-align:super}
+    .stat-label{font-size:.72rem;color:var(--ink-3);margin-top:.2rem;line-height:1.4}
+
+    /* ── MEDIA ── */
+    #media{background:var(--paper)}
+
+    .media-split{
+      display:grid;
+      grid-template-columns:1.25fr 1fr;
+      gap:1.5rem;
+      margin-bottom:1.5rem;
+    }
+    .video-card{position:relative;background:var(--ink);cursor:pointer;overflow:hidden}
+    .video-thumb-wrap{position:relative;aspect-ratio:16/9;overflow:hidden}
+    .video-thumb-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease,opacity .25s}
+    .video-card:hover .video-thumb-wrap img{transform:scale(1.04);opacity:.82}
+    .play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+    .play-circle{width:52px;height:52px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 16px rgba(0,0,0,.4);transition:transform .18s,background .18s}
+    .video-card:hover .play-circle{transform:scale(1.1);background:var(--red-dim)}
+    .play-circle svg{margin-left:3px}
+    .video-meta{padding:.8rem 1rem 1rem;background:var(--ink)}
+    .video-source{font-size:.62rem;font-weight:500;letter-spacing:.1em;color:var(--red);font-style:italic;margin-bottom:.2rem}
+    .video-title{font-family:var(--serif);font-size:.95rem;color:var(--paper);line-height:1.3}
+    .video-frame{display:none;width:100%;aspect-ratio:16/9}
+    .video-frame iframe{width:100%;height:100%;border:none;display:block}
+
+    .video-stack{display:flex;flex-direction:column;gap:1px;background:var(--rule)}
+    .video-small{
+      display:grid;grid-template-columns:130px 1fr;
+      cursor:pointer;overflow:hidden;background:var(--paper-2);
+      transition:background .18s;
+    }
+    .video-small:hover{background:var(--paper)}
+    .video-small-thumb{position:relative;width:130px;aspect-ratio:16/9;overflow:hidden}
+    .video-small-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s}
+    .video-small:hover .video-small-thumb img{opacity:.85}
+    .play-small{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(25,25,23,.3)}
+    .play-small svg{width:28px;height:28px}
+    .video-small-meta{padding:.75rem 1rem;display:flex;flex-direction:column;justify-content:center}
+    .video-small-source{font-size:.6rem;font-weight:500;letter-spacing:.1em;color:var(--red);margin-bottom:.2rem;font-style:italic}
+    .video-small-title{font-family:var(--serif);font-size:.88rem;color:var(--ink);line-height:1.3}
+
+    .articles-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+    .article-card{display:flex;flex-direction:column;padding:1.5rem 1.75rem;border:1px solid var(--rule);background:var(--paper-2);transition:border-color .18s}
+    .article-card:hover{border-color:var(--red)}
+    .article-pub{font-size:.62rem;font-weight:500;letter-spacing:.12em;color:var(--red);font-style:italic;margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem}
+    .article-pub::before{content:'';display:block;width:1.25rem;height:1px;background:var(--red)}
+    .article-title{font-family:var(--serif);font-size:1.05rem;font-weight:700;line-height:1.25;color:var(--ink);margin-bottom:.5rem}
+    .article-desc{font-size:.82rem;color:var(--ink-2);line-height:1.65}
+    .article-date{font-size:.68rem;color:var(--ink-3);font-style:italic;margin-top:auto;padding-top:1rem}
+
+    /* ── CAREER TIMELINE ── */
+    #story{background:var(--paper-2)}
+
+    .story-header{
+      display:grid;grid-template-columns:1fr 1fr;gap:3rem;
+      margin-bottom:3rem;padding-bottom:2.5rem;
+      border-bottom:1px solid var(--rule);
+    }
+    .story-display{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,2.5rem);font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--ink)}
+    .story-display em{font-style:italic;font-weight:400;color:var(--red)}
+    .story-intro{font-size:.95rem;line-height:1.8;color:var(--ink-2);display:flex;align-items:center}
+
+    .timeline{display:grid;grid-template-columns:7rem 1px 1fr;gap:0 2rem}
+    .tl-period{text-align:right;padding-top:.15rem;padding-bottom:2.25rem}
+    .tl-period-label{font-size:.68rem;color:var(--ink-3);font-style:italic;line-height:1.4}
+    .tl-rail{position:relative;display:flex;flex-direction:column;align-items:center}
+    .tl-rail::before{content:'';position:absolute;top:.5rem;bottom:0;left:50%;transform:translateX(-50%);width:1px;background:var(--rule)}
+    .tl-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:.2rem;position:relative;z-index:1}
+    .tl-dot.open{background:var(--paper-2);border:2px solid var(--red)}
+    .tl-entry{padding-bottom:2.25rem}
+    .tl-role{font-family:var(--serif);font-size:1.05rem;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:.15rem}
+    .tl-company{font-size:.75rem;font-weight:500;color:var(--red);margin-bottom:.6rem}
+    .tl-desc{font-size:.87rem;line-height:1.7;color:var(--ink-2);max-width:56ch}
+    .tl-tag{display:inline-block;font-size:.62rem;letter-spacing:.05em;color:var(--ink-3);border:1px solid var(--rule);padding:.15rem .5rem;margin-top:.65rem;margin-right:.3rem}
+
+    /* ── ABOUT ── */
+    #about{background:var(--paper)}
+    .about-grid{display:grid;grid-template-columns:2fr 1fr;gap:clamp(3rem,6vw,5rem);align-items:start}
+    .about-body h2{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--ink);margin-bottom:1.25rem}
+    .about-body p{font-size:.93rem;line-height:1.85;color:var(--ink-2);max-width:60ch;margin-bottom:1.1rem}
+    .about-body p:last-child{margin-bottom:0}
+    .about-sidebar .sidebar-block{padding:1.25rem 0;border-bottom:1px solid var(--rule)}
+    .about-sidebar .sidebar-block:first-child{padding-top:0}
+    .sidebar-label{font-size:.62rem;font-weight:500;letter-spacing:.12em;color:var(--ink-3);font-style:italic;margin-bottom:.4rem}
+    .sidebar-val{font-size:.87rem;color:var(--ink);line-height:1.55}
+    .sidebar-val strong{font-weight:500}
+
+    /* ── SERVICES ── */
+    #services{background:var(--ink);padding:clamp(3.5rem,8vw,6rem) var(--gutter)}
+    .services-inner{max-width:var(--col);margin:0 auto}
+    .services-top{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid rgba(242,239,232,.08)}
+    .services-title{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700;color:var(--paper);line-height:1.1}
+    .services-note{font-size:.85rem;color:rgba(242,239,232,.38);line-height:1.65}
+    .services-list{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(242,239,232,.08);border-left:1px solid rgba(242,239,232,.08)}
+    .svc{padding:1.5rem;border-right:1px solid rgba(242,239,232,.08);border-bottom:1px solid rgba(242,239,232,.08)}
+    .svc-name{font-family:var(--serif);font-size:.95rem;font-weight:700;color:var(--paper);margin-bottom:.4rem;line-height:1.25}
+    .svc-desc{font-size:.78rem;line-height:1.6;color:rgba(242,239,232,.35)}
+
+    /* ── CONTACT ── */
+    #contact{background:var(--paper-2);padding:clamp(4.5rem,9vw,7rem) var(--gutter)}
+    .contact-inner{max-width:var(--col);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem,6vw,5rem);align-items:center}
+    .contact-display{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:900;letter-spacing:-.03em;line-height:.95;color:var(--ink);margin-bottom:1.25rem}
+    .contact-display em{font-style:italic;font-weight:400;color:var(--red)}
+    .contact-sub{font-size:.93rem;line-height:1.75;color:var(--ink-2);max-width:42ch;margin-bottom:1.75rem}
+    .contact-link{display:flex;align-items:center;gap:.9rem;padding:1rem 1.1rem;border:1px solid var(--rule);background:var(--paper);transition:border-color .18s,background .18s}
+    .contact-link:hover{border-color:var(--red);background:var(--paper-2)}
+    .contact-link svg{flex-shrink:0;color:var(--red)}
+    .contact-link-label{font-weight:500;color:var(--ink);font-size:.82rem;display:block}
+    .contact-link-sub{font-size:.72rem;color:var(--ink-3);display:block}
+    .contact-aside{padding:2rem;background:var(--paper);border:1px solid var(--rule)}
+    .contact-aside-name{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:.15rem}
+    .contact-aside-loc{font-size:.75rem;color:var(--ink-3);font-style:italic;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--rule)}
+    .fact-list{display:flex;flex-direction:column;gap:.6rem}
+    .fact{display:flex;gap:.65rem;align-items:baseline}
+    .fact-dot{width:4px;height:4px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:.55rem}
+    .fact-text{font-size:.8rem;color:var(--ink-2);line-height:1.5}
+
+    /* ── FOOTER ── */
+    footer{padding:1.4rem var(--gutter);background:var(--ink);border-top:1px solid rgba(242,239,232,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+    footer span,footer a{font-size:.7rem;color:rgba(242,239,232,.3);transition:color .15s}
+    footer a:hover{color:var(--red)}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:860px){
+      #hero{grid-template-columns:1fr;min-height:auto}
+      .hero-mosaic{height:55vw;position:relative}
+      .hero-text{border-left:none;border-top:1px solid var(--rule)}
+      .project-lead,.project-lead.flip{grid-template-columns:1fr;direction:ltr}
+      .project-lead.flip .project-body{border-right:none;border-top:1px solid var(--rule)}
+      .project-body{border-left:none;border-top:1px solid var(--rule)}
+      .project-visual{min-height:220px}
+      .media-split{grid-template-columns:1fr}
+      .articles-row{grid-template-columns:1fr}
+      .story-header{grid-template-columns:1fr;gap:1.25rem}
+      .timeline{grid-template-columns:4.5rem 1px 1fr;gap:0 1rem}
+      .about-grid{grid-template-columns:1fr}
+      .services-top{grid-template-columns:1fr;gap:1rem}
+      .services-list{grid-template-columns:1fr 1fr}
+      .contact-inner{grid-template-columns:1fr}
+    }
+    @media(max-width:480px){
+      .services-list{grid-template-columns:1fr}
+      .mosaic-grid{grid-template-columns:1fr 1fr}
+    }
+
+
+    /* L2E wide project: full width, image above text */
+    .project-lead--wide {
+      grid-template-columns: 1fr;
+    }
+    .project-lead--wide .project-body {
+      border-left: none;
+      border-top: 1px solid var(--rule);
+    }
+    .project-visual--wide {
+      min-height: 0;
+    }
+    .project-visual--wide img {
+      aspect-ratio: 16 / 7;
+      width: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* ── 4-up video link grid ── */
+    .media-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .video-link-card {
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
-    }
-
-    /* ── Layout ── */
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: clamp(3rem, 10vw, 8rem) clamp(2rem, 8vw, 6rem);
-      max-width: 680px;
-    }
-
-    /* ── Name / Hero ── */
-    .name {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.8rem, 6vw, 4.2rem);
-      font-weight: 400;
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-bottom: 0.35rem;
-    }
-
-    .tagline {
-      font-size: 0.85rem;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-    }
-
-    .location {
-      font-size: 0.78rem;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin-bottom: 3.5rem;
-    }
-
-    /* ── Divider ── */
-    .rule {
-      width: 2.5rem;
-      height: 1px;
-      background: var(--gold-dim);
-      margin-bottom: 3rem;
-    }
-
-    /* ── Services ── */
-    .services-label {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 1.25rem;
-    }
-
-    .services {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-bottom: 4rem;
-    }
-
-    .services li {
-      position: relative;
-      padding: 0.9rem 0 0.9rem 1.25rem;
-      font-size: 1rem;
-      font-weight: 300;
-      color: var(--text);
-      border-bottom: 1px solid #1E252D;
-      transition: color 0.2s ease, padding-left 0.2s ease;
-      cursor: default;
-    }
-
-    .services li:first-child {
-      border-top: 1px solid #1E252D;
-    }
-
-    .services li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: var(--gold);
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-
-    .services li:hover {
-      color: var(--gold);
-      padding-left: 1.5rem;
-    }
-
-    .services li:hover::before {
-      opacity: 1;
-    }
-
-    /* ── CTA ── */
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
       text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      color: var(--bg);
-      background: var(--gold);
-      padding: 0.75rem 1.5rem;
-      transition: background 0.2s ease, gap 0.2s ease;
+      background: var(--ink);
+      overflow: hidden;
+      transition: opacity .2s;
+    }
+    .video-link-card:hover { opacity: .88; }
+
+    .video-link-thumb {
+      position: relative;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+    }
+    .video-link-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform .4s ease;
+    }
+    .video-link-card:hover .video-link-thumb img { transform: scale(1.04); }
+
+    .video-link-play {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
     }
 
-    .cta:hover {
-      background: #C9A87A;
-      gap: 0.9rem;
+    .video-link-meta {
+      padding: .7rem .9rem .85rem;
+      background: var(--ink);
+    }
+    .video-link-source {
+      font-size: .6rem; font-weight: 500;
+      letter-spacing: .1em; color: var(--red);
+      font-style: italic; margin-bottom: .2rem;
+    }
+    .video-link-title {
+      font-family: var(--serif);
+      font-size: .85rem; color: var(--paper);
+      line-height: 1.3;
     }
 
-    .cta svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
+    @media(max-width:860px) {
+      .media-grid-4 { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width:480px) {
+      .media-grid-4 { grid-template-columns: 1fr; }
     }
 
-    /* ── Footer ── */
-    footer {
-      padding: clamp(1.5rem, 4vw, 2.5rem) clamp(2rem, 8vw, 6rem);
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-      border-top: 1px solid #1A2028;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; }
-    }
-
-    @media (max-width: 480px) {
-      main { justify-content: flex-start; padding-top: 5rem; }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{transition:none!important;animation:none!important}
+      html{scroll-behavior:auto}
     }
   </style>
 </head>
 <body>
 
-  <main>
-    <h1 class="name">Scott Touchton</h1>
-    <p class="tagline">Consultant &amp; Strategist</p>
-    <p class="location">New Orleans, LA</p>
+<!-- NAV -->
+<nav id="main-nav" role="navigation" aria-label="Main navigation">
+  <span class="nav-logo">Scott Touchton</span>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#media">Media</a></li>
+    <li><a href="#story">Career</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-drawer" id="hamburger-btn">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-drawer" id="nav-drawer" role="dialog" aria-label="Navigation">
+  <a href="#work" onclick="closeDrawer()">Work</a>
+  <a href="#media" onclick="closeDrawer()">Media</a>
+  <a href="#story" onclick="closeDrawer()">Career</a>
+  <a href="#about" onclick="closeDrawer()">About</a>
+  <a href="#contact" onclick="closeDrawer()">Contact</a>
+</div>
 
-    <div class="rule"></div>
+<!-- HERO -->
+<section id="hero" aria-label="Introduction">
 
-    <p class="services-label">Services</p>
-    <ul class="services">
-      <li>Marketing Consulting &amp; Fractional CMO</li>
-      <li>AI Consultant &amp; Integration for Small Businesses</li>
-      <li>LinkedIn Ghostwriting &amp; Consulting</li>
-      <li>Crypto / Blockchain Consulting &amp; Education</li>
-      <li>Web Design &amp; Hosting</li>
-    </ul>
+  <!-- Left: 4-tile photo mosaic -->
+  <div class="hero-mosaic" aria-hidden="true">
+    <div class="mosaic-grid">
+      <div class="mosaic-cell">
+        <img src="images/hero_a_portrait.jpg" alt="Scott Touchton at community event in Puerto Rico"/>
+        <span class="mosaic-label">Puerto Rico 2026</span>
+      </div>
+      <div class="mosaic-cell">
+        <img src="images/hero_b_speaking.jpg" alt="Scott Touchton at StateChain Summit 2026"/>
+        <span class="mosaic-label">StateChain Summit '26</span>
+      </div>
+      <div class="mosaic-cell">
+        <img src="images/hero_c_farm.jpg" alt="Scott Touchton on location"/>
+        <span class="mosaic-label">On location</span>
+      </div>
+      <div class="mosaic-cell">
+        <img src="images/hero_d_senate.jpg" alt="Scott in Senate office meeting with policy advisor"/>
+        <span class="mosaic-label">U.S. Senate · Washington, D.C.</span>
+      </div>
+    </div>
+  </div>
 
-    <a class="cta" href="https://www.linkedin.com/in/touchton/" target="_blank" rel="noopener noreferrer">
-      Connect on LinkedIn
-      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-  </main>
+  <!-- Right: editorial text -->
+  <div class="hero-text">
+    <div>
+      <div class="hero-masthead">
+        <div class="hero-masthead-top">
+          <span class="hero-edition">Product Marketing & GTM Strategy</span>
+          <span class="hero-location">New Orleans, LA</span>
+        </div>
+      </div>
 
-  <footer>
-    &copy; 2025 Scott Touchton &nbsp;·&nbsp; skippyt.com
-  </footer>
+      <h1 class="hero-headline">Every Side<br>of the<br><em>Microphone.</em></h1>
+
+      <p class="hero-deck">Operations leader. Communications strategist. Marketing and Growth Consultant. Storyteller. The through-line: turning complex ideas into messages that move people to act.</p>
+
+      <div class="hero-ctas">
+        <a href="#work" class="btn btn-red">See selected work</a>
+        <a href="https://www.linkedin.com/in/touchton/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+      </div>
+    </div>
+
+    <div class="hero-record">
+      <p class="hero-record-label">In the record</p>
+      <div class="record-items">
+        <div class="record-item">
+          <span class="record-title">VectorX — Bourbon Street to Boardrooms</span>
+          <span class="record-tag">▶ Video</span>
+        </div>
+        <div class="record-item">
+          <span class="record-title">Representing Pat O'Brien's on ESPN</span>
+          <span class="record-tag">▶ Video</span>
+        </div>
+        <div class="record-item">
+          <span class="record-title">Stand With Crypto — Louisiana Chapter President</span>
+          <span class="record-tag">Advocacy</span>
+        </div>
+        <div class="record-item">
+          <span class="record-title">New Orleans Magazine — People to Watch 2014</span>
+          <span class="record-tag">↗ Press</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">VectorX — Bourbon Street to Boardrooms</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">ESPN — Pat O'Brien's</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Stand With Crypto · Louisiana Chapter President</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">U.S. Senate Policy Advisory — Blockchain & Crypto</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">New Orleans Magazine People to Watch 2014</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Eater New Orleans</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Learn2Earn — 65+ Hosted Episodes</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Royal Family Farms · GROW Blockchain · Washington State</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Guest Speaker · LSU New Orleans</span><span class="ticker-sep"> · </span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">VectorX — Bourbon Street to Boardrooms</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">ESPN — Pat O'Brien's</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Stand With Crypto · Louisiana Chapter President</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">U.S. Senate Policy Advisory — Blockchain & Crypto</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">New Orleans Magazine People to Watch 2014</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Eater New Orleans</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Learn2Earn — 65+ Hosted Episodes</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Royal Family Farms · GROW Blockchain · Washington State</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Guest Speaker · LSU New Orleans</span><span class="ticker-sep"> · </span>
+  </div>
+</div>
+
+<!-- FEATURED WORK -->
+<section id="work" class="section" aria-label="Selected work">
+  <div class="section-inner">
+    <p class="section-eyebrow">Selected work</p>
+    <p class="work-intro">Different industries. Different audiences. <em>Same challenge: making things work.</em></p>
+
+    <!-- Project 1: Learn2Earn -->
+    <div class="project-lead project-lead--wide" role="article" aria-label="Learn2Earn project">
+      <div class="project-visual project-visual--wide">
+        <img src="images/proj_l2e.jpg" alt="Scott Touchton hosting a Client Learn2Earn Community Call"/>
+        <span class="project-vis-label">Client · Learn2Earn</span>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Live Training · Educational Programming · Community Building</p>
+        <h2 class="project-name">Learn2Earn — Client Training & Education Program</h2>
+        <p class="project-desc">Serving as the recurring on-camera host and content creator for a client's Learn2Earn program — a structured blockchain education series designed to onboard new users and drive adoption. Each block follows a lesson-quiz-action format, building from basics to practical use across the community.</p>
+        <div class="project-chips">
+          <span class="chip">On-Camera Host</span>
+          <span class="chip">Educational Content</span>
+          <span class="chip">Community Engagement</span>
+          <span class="chip">Live Training</span>
+          <span class="chip">Blockchain Adoption</span>
+        </div>
+        <div class="project-stat">
+          <div class="stat-block">
+            <p class="stat-num">65<sup>+</sup></p>
+            <p class="stat-label">Episodes produced & hosted</p>
+          </div>
+          <div class="stat-block">
+            <p class="stat-num" style="font-size:1.3rem">Over 170K<sup>+</sup></p>
+            <p class="stat-label">Digital rewards distributed to program participants</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2: GROW / Royal Family Farms -->
+    <div class="project-lead flip" role="article" aria-label="GROW Blockchain Royal Family Farms project">
+      <div class="project-visual">
+        <img src="images/proj_grow.jpg" alt="Scott Touchton and Austin Allred at The Ranch by Royal Family Farming"/>
+        <span class="project-vis-label">Royal City, Washington · on location</span>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Field Marketing · Storytelling · Blockchain Agriculture</p>
+        <h2 class="project-name">GROW Blockchain — Royal Family Farms</h2>
+        <p class="project-desc">On-location field marketing and brand storytelling with Austin Allred of Royal Family Farms — a three-generation, 6,000-acre regenerative farming operation in Royal City, Washington. Produced content documenting how Royal Family Farms is recording agricultural operations on the GROW Blockchain, connecting farm-to-table transparency with Web3 technology.</p>
+        <div class="project-chips">
+          <span class="chip">Field Marketing</span>
+          <span class="chip">Brand Storytelling</span>
+          <span class="chip">On-Location Production</span>
+          <span class="chip">Agriculture × Blockchain</span>
+          <span class="chip">GROW Token</span>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Project 3: Stand With Crypto -->
+    <div class="project-lead" role="article" aria-label="Stand With Crypto project">
+      <div class="project-visual">
+        <img src="images/proj_swc.jpg" alt="Stand With Crypto delegation at the U.S. Capitol, Washington D.C."/>
+        <span class="project-vis-label">Capitol Hill · Washington, D.C.</span>
+      </div>
+      <div class="project-body">
+        <p class="project-tag">Policy Advocacy · Industry Leadership · Community</p>
+        <h2 class="project-name">Stand With Crypto — Louisiana Chapter President</h2>
+        <p class="project-desc">Serving as Louisiana Chapter President for Stand With Crypto — the national advocacy organization focused on sensible blockchain and cryptocurrency regulation. Led the Louisiana delegation to Capitol Hill, meeting with Senate policy advisors on blockchain and crypto matters as an outside industry voice. Representing the crypto community in the policy process at the state and federal level.</p>
+        <div class="project-chips">
+          <span class="chip">Chapter President</span>
+          <span class="chip">Policy Advocacy</span>
+          <span class="chip">Capitol Hill</span>
+          <span class="chip">Blockchain Regulation</span>
+          <span class="chip">Industry Leadership</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA -->
+<section id="media" class="section" aria-label="Media and appearances">
+  <div class="section-inner">
+    <p class="section-eyebrow">Media & appearances</p>
+
+    <div class="media-grid-4">
+
+      <!-- VectorX: 2GrOeygSV8A -->
+      <a class="video-link-card" href="https://www.youtube.com/watch?v=2GrOeygSV8A" target="_blank" rel="noopener noreferrer" aria-label="Watch VectorX — Bourbon Street to Boardrooms on YouTube">
+        <div class="video-link-thumb">
+          <img src="https://img.youtube.com/vi/2GrOeygSV8A/maxresdefault.jpg"
+               alt="VectorX interview — Bourbon Street to Boardrooms"
+               onerror="this.src='https://img.youtube.com/vi/2GrOeygSV8A/hqdefault.jpg'"/>
+          <div class="video-link-play" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+              <circle cx="22" cy="22" r="21" fill="rgba(184,48,48,0.92)"/>
+              <polygon points="18,14 34,22 18,30" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="video-link-meta">
+          <p class="video-link-source">VectorX</p>
+          <p class="video-link-title">Bourbon Street to Boardrooms</p>
+        </div>
+      </a>
+
+      <!-- Trust to Traction: bUl3YsG5Ve0 -->
+      <a class="video-link-card" href="https://www.youtube.com/watch?v=bUl3YsG5Ve0" target="_blank" rel="noopener noreferrer" aria-label="Watch Trust to Traction — Web3 Adoption on YouTube">
+        <div class="video-link-thumb">
+          <img src="https://img.youtube.com/vi/bUl3YsG5Ve0/maxresdefault.jpg"
+               alt="Trust to Traction — Web3 Adoption"
+               onerror="this.src='https://img.youtube.com/vi/bUl3YsG5Ve0/hqdefault.jpg'"/>
+          <div class="video-link-play" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+              <circle cx="22" cy="22" r="21" fill="rgba(184,48,48,0.92)"/>
+              <polygon points="18,14 34,22 18,30" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="video-link-meta">
+          <p class="video-link-source">Web3 Strategy</p>
+          <p class="video-link-title">Trust to Traction — Web3 Adoption</p>
+        </div>
+      </a>
+
+      <!-- ESPN Pat O'Brien's: JPaY5GUMSzU -->
+      <a class="video-link-card" href="https://www.youtube.com/watch?v=JPaY5GUMSzU" target="_blank" rel="noopener noreferrer" aria-label="Watch Representing Pat O'Brien's on ESPN on YouTube">
+        <div class="video-link-thumb">
+          <img src="https://img.youtube.com/vi/JPaY5GUMSzU/maxresdefault.jpg"
+               alt="Representing Pat O'Brien's on ESPN"
+               onerror="this.src='https://img.youtube.com/vi/JPaY5GUMSzU/hqdefault.jpg'"/>
+          <div class="video-link-play" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+              <circle cx="22" cy="22" r="21" fill="rgba(184,48,48,0.92)"/>
+              <polygon points="18,14 34,22 18,30" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="video-link-meta">
+          <p class="video-link-source">ESPN · Pat O'Brien's</p>
+          <p class="video-link-title">Representing Pat O'Brien's on ESPN</p>
+        </div>
+      </a>
+
+      <!-- Switch CEO: i1skWhIdywA -->
+      <a class="video-link-card" href="https://www.youtube.com/watch?v=i1skWhIdywA" target="_blank" rel="noopener noreferrer" aria-label="Watch Switch Reward Card CEO Interview on YouTube">
+        <div class="video-link-thumb">
+          <img src="https://img.youtube.com/vi/i1skWhIdywA/maxresdefault.jpg"
+               alt="Switch Reward Card — Interview with CEO Kathy Roberts"
+               onerror="this.src='https://img.youtube.com/vi/i1skWhIdywA/hqdefault.jpg'"/>
+          <div class="video-link-play" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+              <circle cx="22" cy="22" r="21" fill="rgba(184,48,48,0.92)"/>
+              <polygon points="18,14 34,22 18,30" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="video-link-meta">
+          <p class="video-link-source">Switch Reward Card</p>
+          <p class="video-link-title">Interview with CEO Kathy Roberts</p>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Articles -->
+    <div class="articles-row">
+      <a class="article-card" href="https://nola.eater.com/2013/2/12/6481607/everyone-wants-a-hurricane-fat-tuesday-at-pat-obriens-with-scott" target="_blank" rel="noopener noreferrer">
+        <p class="article-pub">Eater New Orleans</p>
+        <p class="article-title">Everyone Wants a Hurricane: Fat Tuesday at Pat O'Brien's</p>
+        <p class="article-desc">Scott represents Pat O'Brien's on record at peak Mardi Gras — one of the highest-volume operational days in New Orleans hospitality.</p>
+        <p class="article-date">February 2013</p>
+      </a>
+      <a class="article-card" href="https://www.myneworleans.com/jamie-scott-touchton/" target="_blank" rel="noopener noreferrer">
+        <p class="article-pub">New Orleans Magazine</p>
+        <p class="article-title">Jamie & Scott Touchton — People to Watch 2014</p>
+        <p class="article-desc">Named to New Orleans Magazine's annual "People to Watch" class for co-founding My Town Toy Company — a Kickstarter-funded New Orleans–themed toy brand.</p>
+        <p class="article-date">September 2014</p>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- CAREER TIMELINE -->
+<section id="story" class="section" aria-label="Career">
+  <div class="section-inner">
+    <p class="section-eyebrow">Career</p>
+
+    <div class="story-header">
+      <h2 class="story-display">The résumé doesn't<br>explain <em>the résumé.</em></h2>
+      <p class="story-intro">The range of work speaks for itself. The skill that runs through all of it: turning complex things into messages that move people to act.</p>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-period"><p class="tl-period-label">Oct 2019–Present</p></div>
+      <div class="tl-rail"><div class="tl-dot open"></div></div>
+      <div class="tl-entry">
+        <p class="tl-role">Product Marketing & GTM Consultant</p>
+        <p class="tl-company">Fractional & Project-Based — Remote</p>
+        <p class="tl-desc">GTM strategy and launch execution across a 12+ brand technology portfolio. Built an interactive dashboard tracking milestones across multiple projects. Projects include Learn2Earn educational curriculum (creation and on camera), field marketing and storytelling, growth strategy and product launch. Partners with engineering to verify technical claims before anything ships.</p>
+        <span class="tl-tag">Product Marketing</span><span class="tl-tag">GTM</span><span class="tl-tag">On-Camera</span><span class="tl-tag">Field Marketing</span>
+      </div>
+
+      <div class="tl-period"><p class="tl-period-label">Apr 2022–Aug 2023</p></div>
+      <div class="tl-rail"><div class="tl-dot"></div></div>
+      <div class="tl-entry">
+        <p class="tl-role">VP of Sales & Marketing</p>
+        <p class="tl-company">Switch Reward Card — Remote / Lehi, Utah</p>
+        <p class="tl-desc">Led go-to-market strategy for a blockchain-based consumer rewards product. Translated technical capabilities into consumer and partner value propositions. Produced on-camera executive interviews and launch content.</p>
+        <span class="tl-tag">GTM</span><span class="tl-tag">Blockchain</span><span class="tl-tag">Executive</span>
+      </div>
+
+      <div class="tl-period"><p class="tl-period-label">Feb–Oct 2019</p></div>
+      <div class="tl-rail"><div class="tl-dot"></div></div>
+      <div class="tl-entry">
+        <p class="tl-role">Territory Account Executive</p>
+        <p class="tl-company">Toast Inc. — New Orleans, LA</p>
+        <p class="tl-desc">Sold a technical B2B SaaS platform to hospitality operators in a newly launched territory. Owned the full sales cycle — with the advantage of knowing the buyer's world from the inside.</p>
+        <span class="tl-tag">B2B SaaS</span><span class="tl-tag">Full-Cycle Sales</span>
+      </div>
+
+      <div class="tl-period"><p class="tl-period-label">2007–2018</p></div>
+      <div class="tl-rail"><div class="tl-dot"></div></div>
+      <div class="tl-entry">
+        <p class="tl-role">Operations Manager · Director of Sales & Marketing · Opening Restaurant Manager</p>
+        <p class="tl-company">Pat O'Brien's Bar (est. 1933) · NOLA Motorsports Park · Drago's at Hilton Riverside — New Orleans</p>
+        <p class="tl-desc">Over a decade in New Orleans hospitality and events: managed 200+ hourly staff at Pat O'Brien's, directed all sales and marketing at NOLA Motorsports Park, and opened the 360-seat Drago's restaurant at the Hilton Riverside. Served as brand spokesperson — including an appearance representing Pat O'Brien's on ESPN. Directed digital marketing and special event programming for Mardi Gras and the Super Bowl.</p>
+        <span class="tl-tag">Operations</span><span class="tl-tag">200+ Staff</span><span class="tl-tag">Brand Spokesperson</span><span class="tl-tag">Events</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section" aria-label="About">
+  <div class="section-inner">
+    <p class="section-eyebrow">About</p>
+    <div class="about-grid">
+      <div class="about-body">
+        <h2>A career built across industries, audiences, and media.</h2>
+        <p>I've run operations on Bourbon Street, stood in front of the camera as a brand spokesperson, closed SaaS deals, led a blockchain product launch as VP of Sales &amp; Marketing, hosted 65+ educational episodes, traveled to a 6,000-acre farm in Washington to document regenerative agriculture on the blockchain, and consulted with U.S. Senate policy advisors on crypto regulation — as an outside industry voice, not in a government capacity.</p>
+        <p>Across every context, the work is the same: take something complex and make it legible to the person who needs to act on it. Running 200 people on Bourbon Street during Mardi Gras. Representing a brand on ESPN. Building positioning for a blockchain product that most of the audience has never heard of. The room changes; the craft doesn't.</p>
+        <p>I'm based on the New Orleans area. I'm Louisiana Chapter President of Stand With Crypto, a repeat guest speaker at LSU New Orleans, and I'll talk to anyone who's building something worth talking about.</p>
+      </div>
+      <div class="about-sidebar">
+        <div class="sidebar-block">
+          <p class="sidebar-label">Education</p>
+          <p class="sidebar-val"><strong>University of New Orleans (now LSU New Orleans)</strong><br>B.S. Business Administration, Minor in Management (2006)</p>
+        </div>
+        <div class="sidebar-block">
+          <p class="sidebar-label">Location</p>
+          <p class="sidebar-val">New Orleans, LA · Remote-open</p>
+        </div>
+        <div class="sidebar-block">
+          <p class="sidebar-label">Civic</p>
+          <p class="sidebar-val">Louisiana Chapter President, Stand With Crypto<br>Consulted with U.S. Senate policy advisors on blockchain & crypto</p>
+        </div>
+        <div class="sidebar-block">
+          <p class="sidebar-label">Speaking</p>
+          <p class="sidebar-val">Repeat guest speaker, LSU New Orleans</p>
+        </div>
+        <div class="sidebar-block">
+          <p class="sidebar-label">Core skills</p>
+          <p class="sidebar-val">Product Marketing · GTM Strategy · Positioning · Launch Execution · Sales Enablement · On-Camera · B2B SaaS · Blockchain · AI-Assisted Marketing · Content Strategy</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" aria-label="Consulting services">
+  <div class="services-inner">
+    <div class="services-top">
+      <h2 class="services-title">Available for consulting engagements.</h2>
+      <p class="services-note">Senior marketing and strategy experience on a fractional or project basis — without the full-time hire.</p>
+    </div>
+    <div class="services-list">
+      <div class="svc"><p class="svc-name">Product Marketing & Fractional CMO</p><p class="svc-desc">GTM strategy, positioning, messaging, and launch execution.</p></div>
+      <div class="svc"><p class="svc-name">AI Integration</p><p class="svc-desc">Identifying real AI leverage and building workflows that stick.</p></div>
+      <div class="svc"><p class="svc-name">LinkedIn Strategy & Ghostwriting</p><p class="svc-desc">Executive voice development and authority content.</p></div>
+      <div class="svc"><p class="svc-name">Crypto & Blockchain Advisory</p><p class="svc-desc">Token strategy, community communications, plain-English messaging.</p></div>
+      <div class="svc"><p class="svc-name">Web Design & Hosting</p><p class="svc-desc">Clean, fast websites built to convert.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" aria-label="Contact">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-display">Let's talk about<br><em>your thing.</em></h2>
+      <p class="contact-sub">Hiring managers, founders, and potential collaborators — LinkedIn is the fastest way to reach me.</p>
+      <a class="contact-link" href="https://www.linkedin.com/in/touchton/" target="_blank" rel="noopener noreferrer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        <div>
+          <span class="contact-link-label">Connect on LinkedIn</span>
+          <span class="contact-link-sub">linkedin.com/in/touchton</span>
+        </div>
+      </a>
+    </div>
+    <div class="contact-aside">
+      <p class="contact-aside-name">Scott Touchton</p>
+      <p class="contact-aside-loc">New Orleans, LA · Remote-open</p>
+      <div class="fact-list">
+        <div class="fact"><div class="fact-dot"></div><p class="fact-text">Product Marketing & GTM Consultant — Oct 2019–Present</p></div>
+        <div class="fact"><div class="fact-dot"></div><p class="fact-text">VP of Sales & Marketing — Switch Reward Card</p></div>
+        <div class="fact"><div class="fact-dot"></div><p class="fact-text">Louisiana Chapter President — Stand With Crypto</p></div>
+        <div class="fact"><div class="fact-dot"></div><p class="fact-text">Operations Manager — Pat O'Brien's Bar (est. 1933), 200+ staff</p></div>
+        <div class="fact"><div class="fact-dot"></div><p class="fact-text">B.S. Business Administration, University of New Orleans (now LSU New Orleans)</p></div>
+        <div class="fact"><div class="fact-dot"></div><p class="fact-text">New Orleans Magazine — People to Watch, 2014</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>&copy; 2026 Scott Touchton · skippyt.com</span>
+  <a href="https://www.linkedin.com/in/touchton/" target="_blank" rel="noopener">linkedin.com/in/touchton</a>
+</footer>
+
+<script>
+  // Nav scroll border
+  var nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, {passive: true});
+
+  // Hamburger mobile nav
+  var hamburgerBtn = document.getElementById('hamburger-btn');
+  var drawer = document.getElementById('nav-drawer');
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+  }
+  hamburgerBtn.addEventListener('click', function() {
+    var open = drawer.classList.toggle('open');
+    hamburgerBtn.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', function(e) {
+    if (!nav.contains(e.target) && !drawer.contains(e.target)) closeDrawer();
+  });
+
+  // Videos open on YouTube — no player JS needed
+</script>
 
 </body>
 </html>
