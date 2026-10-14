@@ -378,6 +378,47 @@
 
 
 
+
+    /* Additional work list in project cards */
+    .project-also {
+      padding-top: .85rem;
+      border-top: 1px solid var(--rule);
+      margin-top: .25rem;
+    }
+    .project-also-label {
+      font-size: .62rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      color: var(--ink-3);
+      font-style: italic;
+      margin-bottom: .6rem;
+    }
+    .project-also-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .project-also-list li {
+      font-size: .85rem;
+      color: var(--ink-2);
+      padding: .4rem 0;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .project-also-list li:last-child { border-bottom: none; }
+    .project-also-list li::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
     /* L2E: caption above image */
     .project-lead--caption-first {
       display: flex;
@@ -673,6 +714,17 @@
           <span class="chip">Blockchain Regulation</span>
           <span class="chip">Industry Leadership</span>
         </div>
+        <div class="project-also">
+          <p class="project-also-label">Additional work</p>
+          <ul class="project-also-list">
+            <li>Panel and Webinar Moderation</li>
+            <li>LinkedIn Ghostwriting</li>
+            <li>Managing Earned and Paid Media</li>
+            <li>Executive Communications &amp; Messaging</li>
+            <li>Sales Enablement Content</li>
+            <li>Community &amp; Audience Development</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -875,7 +927,7 @@
   <div class="services-inner">
     <div class="services-top">
       <h2 class="services-title">Available for consulting engagements.</h2>
-      <p class="services-note">Senior marketing and strategy experience on a fractional or project basis — without the full-time hire.</p>
+      <p class="services-note">Senior marketing and strategy experience available for full-time, fractional, or project-based engagements.</p>
     </div>
     <div class="services-list">
       <div class="svc"><p class="svc-name">Product Marketing & Fractional CMO</p><p class="svc-desc">GTM strategy, positioning, messaging, and launch execution.</p></div>
@@ -899,6 +951,17 @@
         <div>
           <span class="contact-link-label">Connect on LinkedIn</span>
           <span class="contact-link-sub">linkedin.com/in/touchton</span>
+        </div>
+      </a>
+      <a class="contact-link" href="https://calendly.com/touchton" target="_blank" rel="noopener noreferrer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <path d="M16 2v4M8 2v4M3 10h18"/>
+          <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+        </svg>
+        <div>
+          <span class="contact-link-label">Book a call</span>
+          <span class="contact-link-sub">calendly.com/touchton</span>
         </div>
       </a>
     </div>
