@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Citrus Waste Project | CITREVE</title>
+<meta name="description" content="CITREVE is measuring real citrus garnish waste at bars, caterers, and hotels, and sharing the results free with everyone who helps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== CITREVE tokens (pulled from citreve.com theme) ===== */
+:root{
+  --green:#2A8C2A;        /* header / brand bar */
+  --green-dark:#21841A;   /* button label green */
+  --lime:#7AB108;         /* hero headline green */
+  --lime-btn:#66BD03;     /* banner button */
+  --cream:#FAF7DE;        /* cream button / panels */
+  --cream-2:#FFFEF9;      /* header text */
+  --ink:#2B2C2D;          /* body text */
+  --ink-75:rgba(43,44,45,.75);
+  --sand:#B7ACA2;         /* default button */
+  --terracotta:#A9462F;   /* seasonal accent */
+  --gold:#D5A340;
+  --black:#000;
+  --radius:10px;
+  --heading:"Playfair Display",Georgia,serif;
+  --body:Raleway,"Helvetica Neue",Arial,sans-serif;
+  --maxw:1200px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--body);font-size:16px;line-height:1.7;letter-spacing:.04em;color:var(--ink-75);background:#fff}
+img{max-width:100%;display:block}
+a{color:var(--green)}
+h1,h2,h3{font-family:var(--heading);font-weight:400;color:var(--ink);letter-spacing:.03em;line-height:1.2;margin:0 0 .5em}
+h2{font-size:clamp(1.8rem,5vw,2.6rem)}
+h3{font-size:1.3rem}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+section{padding:64px 0}
+.eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin:0 0 .75em}
+.lede{font-size:1.1rem;max-width:62ch}
+.center{text-align:center}.center .lede{margin-inline:auto}
+
+/* ===== Buttons (CITREVE: Raleway, 10px radius, no caps) ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;min-height:48px;padding:0 28px;border-radius:var(--radius);font-family:var(--body);font-size:1rem;letter-spacing:.07em;text-decoration:none;border:0;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s;width:100%}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.12)}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.btn--primary{background:var(--lime-btn);color:var(--cream)}
+.btn--primary:hover{background:#5aa803}
+.btn--secondary{background:var(--cream);color:var(--green-dark);box-shadow:inset 0 0 0 1.5px var(--green)}
+.btn--dark{background:var(--green);color:var(--cream)}
+@media(min-width:600px){.btn{width:auto}}
+
+/* ===== Header (green bar, round badge logo left) ===== */
+.site-header{background:var(--green);color:var(--cream-2);position:sticky;top:0;z-index:50}
+.site-header .wrap{display:flex;align-items:center;gap:16px;min-height:76px}
+.logo{display:block;flex:none}
+.logo img{width:62px;height:62px;border-radius:50%}
+.nav{display:none}
+.nav a{color:rgba(255,254,249,.8);text-decoration:none;font-size:.95rem;padding:8px 10px}
+.nav a:hover,.nav a[aria-current]{color:var(--cream-2);text-decoration:underline;text-underline-offset:5px}
+.header-icons{margin-left:auto;display:flex;gap:14px;align-items:center}
+.header-icons svg{width:22px;height:22px;stroke:var(--cream-2);fill:none;stroke-width:1.6}
+.menu-btn{background:none;border:0;padding:6px;cursor:pointer}
+@media(min-width:1000px){
+  .logo img{width:96px;height:96px}
+  .site-header .wrap{min-height:116px}
+  .nav{display:flex;flex-wrap:wrap;max-width:620px}
+  .menu-btn{display:none}
+}
+.mobile-nav{display:none;background:#fff;border-bottom:1px solid #eee}
+.mobile-nav.open{display:block}
+.mobile-nav a{display:block;padding:14px 20px;color:var(--ink);text-decoration:none;border-top:1px solid #f0f0f0;font-size:1.05rem}
+
+/* brand band, like "CHEF CURATED | BOLD FLAVOR | ZERO WASTE" */
+.band{background:var(--green);color:var(--cream);text-align:center;font-family:var(--heading);font-size:clamp(.95rem,3.4vw,1.5rem);letter-spacing:.06em;padding:12px 16px;border-top:1px solid rgba(255,255,255,.18)}
+
+/* ===== Photo placeholders (citrus / bar / prep style) ===== */
+.ph{position:relative;border-radius:14px;overflow:hidden;background:#3a2a1c;min-height:240px;isolation:isolate}
+.ph svg.art{position:absolute;inset:0;width:100%;height:100%}
+.ph .tag{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,.55);color:#fff;font-size:.72rem;letter-spacing:.08em;padding:5px 10px;border-radius:999px;backdrop-filter:blur(4px)}
+.ph--bar{background:radial-gradient(120% 90% at 30% 20%,#7a4d22 0%,#3b2414 55%,#1e130b 100%)}
+.ph--prep{background:linear-gradient(160deg,#f6efe1 0%,#e9dcc3 100%)}
+.ph--crate{background:linear-gradient(160deg,#fbe9b6 0%,#f3c766 100%)}
+
+/* ===== Hero ===== */
+.hero{padding:32px 0 56px;background:linear-gradient(180deg,var(--cream) 0%,#fff 100%)}
+.hero-grid{display:grid;gap:28px;align-items:center}
+.hero h1{font-size:clamp(2.2rem,8vw,3.6rem);color:var(--lime);margin:.1em 0 .35em}
+.hero h1 em{color:var(--green);font-style:italic}
+.hero p.sub{font-size:1.12rem;color:var(--ink);max-width:40ch;margin:0 0 1.5em}
+.cta-row{display:flex;flex-direction:column;gap:12px}
+.hero .ph{min-height:300px}
+.trust{margin-top:18px;font-size:.85rem;color:var(--ink-75)}
+@media(min-width:600px){.cta-row{flex-direction:row;flex-wrap:wrap}}
+@media(min-width:900px){.hero{padding:64px 0 80px}.hero-grid{grid-template-columns:1.05fr .95fr;gap:56px}.hero .ph{min-height:460px}}
+
+/* ===== Why ===== */
+.why-grid{display:grid;gap:32px;align-items:center}
+.why .stat{display:flex;gap:14px;align-items:flex-start;margin-top:22px;padding:18px;background:var(--cream);border-radius:12px;border-left:4px solid var(--lime)}
+.why .stat strong{font-family:var(--heading);font-size:1.6rem;color:var(--green);line-height:1}
+.why .ph{min-height:280px}
+@media(min-width:900px){.why-grid{grid-template-columns:.9fr 1.1fr;gap:64px}.why .ph{min-height:400px}}
+
+/* ===== Survey cards ===== */
+.surveys{background:var(--cream)}
+.cards{display:grid;gap:18px;margin-top:36px}
+.card{background:#fff;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 rgba(0,0,0,.04),0 8px 24px rgba(42,140,42,.07);border:1px solid rgba(42,140,42,.12)}
+.card .who{font-size:.9rem;margin:0}
+.card h3{margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 4px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;letter-spacing:.05em;padding:4px 10px;border-radius:999px;background:#eef6e1;color:var(--green-dark)}
+.chip--gold{background:#fbefd2;color:#8a5a0a}
+.card .get{font-size:.92rem;margin:0 0 6px;flex:1}
+.card .get b{color:var(--ink)}
+.card .btn{margin-top:auto}
+.card--feature{border:2px solid var(--lime);position:relative}
+.card--feature .flag{position:absolute;top:-12px;left:20px;background:var(--lime);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:6px}
+.photo-prog{display:grid;gap:16px;grid-template-columns:1fr}
+.qr{width:120px;height:120px;background:#fff;border:1px dashed #b9c8a4;border-radius:10px;padding:8px;flex:none}
+.qr-row{display:flex;gap:14px;align-items:center}
+.qr-row small{font-size:.8rem;line-height:1.5}
+.card--wide{grid-column:1/-1}
+@media(min-width:680px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.cards{grid-template-columns:repeat(3,1fr)}.card--wide{grid-column:span 2}.card--wide .split{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}}
+
+/* ===== How it works ===== */
+.steps{display:grid;gap:22px;margin:36px 0 26px;counter-reset:s}
+.step{text-align:center;padding:26px 20px;border-radius:14px;background:#fff;border:1px solid #eee}
+.step .ic{width:72px;height:72px;margin:0 auto 14px;border-radius:50%;background:var(--cream);display:grid;place-items:center;position:relative}
+.step .ic svg{width:34px;height:34px;stroke:var(--green);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.step .ic::after{counter-increment:s;content:counter(s);position:absolute;top:-4px;right:-4px;width:26px;height:26px;border-radius:50%;background:var(--lime);color:#fff;font:700 .8rem/26px var(--body);letter-spacing:0}
+.step p{margin:0}
+.privacy{display:flex;gap:12px;align-items:center;justify-content:center;font-size:.95rem;color:var(--ink);background:#f4f9ec;border-radius:12px;padding:14px 18px;max-width:720px;margin:0 auto}
+.privacy svg{flex:none;width:22px;height:22px;stroke:var(--green);fill:none;stroke-width:1.8}
+@media(min-width:800px){.steps{grid-template-columns:repeat(3,1fr)}}
+
+/* ===== Gap comparison ===== */
+.gap{background:#fbfaf3}
+.cols{display:grid;gap:18px;margin-top:36px}
+.col{border-radius:14px;padding:26px;background:#fff;border-top:5px solid #d9d4cc}
+.col h3{display:flex;gap:10px;align-items:center}
+.col ul{margin:0;padding:0;list-style:none}
+.col li{position:relative;padding:8px 0 8px 28px;border-top:1px solid #f1eee6;font-size:.96rem}
+.col li:first-child{border-top:0}
+.col li::before{position:absolute;left:0;top:8px;font-weight:700}
+.col--exists li::before{content:"✓";color:#8b8379}
+.col--missing{border-top-color:var(--gold)}
+.col--missing li::before{content:"?";color:#b07d12}
+.col--adds{border-top-color:var(--lime);background:var(--green);color:var(--cream)}
+.col--adds h3{color:var(--cream)}
+.col--adds li{border-top-color:rgba(255,255,255,.15)}
+.col--adds li::before{content:"+";color:#c6ef7a}
+.placeholder-note{font-size:.8rem;font-style:italic;margin-top:14px;text-align:center}
+@media(min-width:900px){.cols{grid-template-columns:repeat(3,1fr)}}
+
+/* ===== Timeline ===== */
+.timeline{list-style:none;margin:36px 0 0;padding:0;display:grid;gap:0;position:relative}
+.tl{position:relative;padding:0 0 30px 46px}
+.tl::before{content:"";position:absolute;left:14px;top:30px;bottom:0;width:2px;background:repeating-linear-gradient(var(--lime) 0 6px,transparent 6px 12px)}
+.tl:last-child::before{display:none}
+.dot{position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid var(--lime);display:grid;place-items:center}
+.tl.now .dot{background:var(--lime)}
+.tl.now .dot::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
+.tl h3{margin:0 0 2px;font-size:1.25rem}
+.when{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8a5a0a;background:#fbefd2;border-radius:6px;padding:2px 8px;margin-bottom:6px}
+.tl p{margin:0;font-size:.95rem}
+@media(min-width:800px){
+  .timeline{grid-template-columns:repeat(3,1fr)}
+  .tl{padding:52px 24px 0 0}
+  .tl::before{left:30px;right:0;top:14px;bottom:auto;width:auto;height:2px;background:repeating-linear-gradient(90deg,var(--lime) 0 6px,transparent 6px 12px)}
+}
+
+/* ===== Talk to us ===== */
+.talk{background:var(--green);color:var(--cream)}
+.talk h2{color:var(--cream)}
+.talk-grid{display:grid;gap:32px;align-items:start}
+.talk .eyebrow{color:#c6ef7a}
+.talk ul{padding-left:1.1em;margin:.8em 0 0}
+.form{background:var(--cream);border-radius:14px;padding:24px;color:var(--ink);display:grid;gap:14px}
+.field label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px}
+.field input,.field select{width:100%;min-height:48px;padding:10px 14px;border:1px solid #cfc9b4;border-radius:var(--radius);background:#fff;font:inherit;letter-spacing:.02em;color:var(--ink)}
+.field input:focus,.field select:focus{outline:2px solid var(--lime);border-color:var(--lime)}
+.form .fine{font-size:.78rem;margin:0;color:var(--ink-75)}
+.thanks{display:none;background:#eef6e1;border-radius:10px;padding:12px 14px;color:var(--green-dark);font-weight:600}
+@media(min-width:700px){.form .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}}
+@media(min-width:900px){.talk-grid{grid-template-columns:1fr 1fr;gap:64px}}
+
+/* ===== FAQ ===== */
+.faq-list{max-width:820px;margin:32px auto 0}
+details{border-bottom:1px solid #e7e3d7}
+summary{list-style:none;cursor:pointer;padding:20px 40px 20px 0;position:relative;font-family:var(--heading);font-size:1.2rem;color:var(--ink)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-family:var(--body);font-size:1.6rem;color:var(--green);transition:transform .2s}
+details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+details p{margin:0 0 20px;max-width:68ch}
+
+/* ===== Footer (matches citreve.com: black, Playfair headings) ===== */
+.site-footer{background:#000;color:rgba(255,255,255,.75);padding:48px 0 0;font-size:.95rem}
+.foot-grid{display:grid;gap:32px;grid-template-columns:1fr 1fr}
+.site-footer h4{font-family:var(--heading);font-weight:400;color:#fff;font-size:1.25rem;letter-spacing:.04em;margin:0 0 14px;text-transform:uppercase}
+.site-footer ul{list-style:none;margin:0;padding:0}
+.site-footer li{margin:0 0 8px}
+.site-footer a{color:rgba(255,255,255,.75);text-decoration:none}
+.site-footer a:hover{color:#fff;text-decoration:underline}
+.news{grid-column:1/-1}
+.news form{display:flex;max-width:420px;margin-top:6px}
+.news input{flex:1;min-height:48px;background:transparent;border:1px solid rgba(255,255,255,.6);border-right:0;border-radius:var(--radius) 0 0 var(--radius);color:#fff;padding:0 14px;font:inherit}
+.news input::placeholder{color:rgba(255,255,255,.6)}
+.news button{min-height:48px;padding:0 16px;border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:0 var(--radius) var(--radius) 0;cursor:pointer}
+.social{display:flex;gap:16px;margin-top:20px}
+.social svg{width:22px;height:22px;fill:#fff}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:40px;padding:22px 0 30px;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center;font-size:.78rem}
+.pay{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.pay span{background:#fff;color:#333;font:700 .62rem/1 var(--body);letter-spacing:.02em;padding:6px 7px;border-radius:4px;min-width:38px;text-align:center}
+.policies{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center}
+@media(min-width:800px){.foot-grid{grid-template-columns:1fr 1fr 1.4fr}.news{grid-column:auto}}
+
+/* skip link + reduced motion */
+.skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;z-index:99;background:#fff;padding:8px 12px;border-radius:6px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Reusable citrus art for photo placeholders -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="wheel" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="48" fill="currentColor"/>
+      <circle cx="50" cy="50" r="42" fill="#fff8e0" opacity=".9"/>
+      <g fill="currentColor" opacity=".55">
+        <path d="M50 50 L50 12 A38 38 0 0 1 77 23 Z"/><path d="M50 50 L80 27 A38 38 0 0 1 88 52 Z"/>
+        <path d="M50 50 L88 56 A38 38 0 0 1 79 79 Z"/><path d="M50 50 L76 82 A38 38 0 0 1 52 88 Z"/>
+        <path d="M50 50 L48 88 A38 38 0 0 1 23 78 Z"/><path d="M50 50 L20 75 A38 38 0 0 1 12 50 Z"/>
+        <path d="M50 50 L12 45 A38 38 0 0 1 22 23 Z"/><path d="M50 50 L25 19 A38 38 0 0 1 46 12 Z"/>
+      </g>
+      <circle cx="50" cy="50" r="5" fill="#fff8e0"/>
+    </symbol>
+    <symbol id="half" viewBox="0 0 100 60">
+      <path d="M2 8 A48 48 0 0 0 98 8 Z" fill="currentColor"/>
+      <path d="M9 8 A41 41 0 0 0 91 8 Z" fill="#fff8e0" opacity=".9"/>
+      <g fill="currentColor" opacity=".5"><path d="M50 8 L14 10 A37 37 0 0 0 26 34Z"/><path d="M50 8 L30 37 A37 37 0 0 0 50 45Z"/><path d="M50 8 L54 45 A37 37 0 0 0 72 36Z"/><path d="M50 8 L75 33 A37 37 0 0 0 86 10Z"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="https://citreve.com/" aria-label="CITREVE home">
+      <img src="https://citreve.com/cdn/shop/files/DrinkIt1.png?v=1772044898&width=240" alt="CITREVE" width="96" height="96">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="https://citreve.com/">Home</a>
+      <a href="#">Shop</a>
+      <a href="#">Wholesale</a>
+      <a href="#">Our Story</a>
+      <a href="#">Chef Nettie Frank</a>
+      <a href="#">CITREVE FAQs</a>
+      <a href="#">Freeze-Drying &amp; CITREVE</a>
+      <a href="#">Contact Us</a>
+    </nav>
+    <div class="header-icons">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="band">THE CITRUS WASTE PROJECT&nbsp;|&nbsp;RESEARCH BY CITREVE</div>
+</header>
+<nav class="mobile-nav" id="mnav" aria-label="Mobile">
+  <a href="#surveys">Take the survey</a><a href="#how">How it works</a><a href="#talk">Talk to us</a><a href="#faq">FAQ</a><a href="https://citreve.com/">CITREVE home</a>
+</nav>
+
+<main id="main">
+
+<!-- 1. HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">The CITREVE Citrus Waste Project</p>
+      <h1>How much citrus does a bar <em>actually</em> throw away?</h1>
+      <p class="sub">We're measuring real garnish waste at bars, caterers, and hotels, and sharing the results free with everyone who helps.</p>
+      <div class="cta-row">
+        <a class="btn btn--primary" href="#surveys">Take the survey</a>
+        <a class="btn btn--secondary" href="#">Bartenders: 3-minute version</a>
+      </div>
+      <p class="trust">Anonymous by default · Free results for every participant · Led by Chef Nettie Frank</p>
+    </div>
+    <div class="ph ph--bar" role="img" aria-label="Placeholder photo: lime and lemon wheels on a bar top at close">
+      <svg class="art" viewBox="0 0 500 460" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <rect x="0" y="300" width="500" height="160" fill="#2a1a0e"/>
+        <rect x="0" y="296" width="500" height="8" fill="#a06a35" opacity=".6"/>
+        <ellipse cx="250" cy="120" rx="220" ry="90" fill="#ffcf73" opacity=".12"/>
+        <rect x="60" y="150" width="46" height="150" rx="8" fill="#5b3a1c" opacity=".55"/>
+        <rect x="120" y="120" width="40" height="180" rx="8" fill="#6d4a22" opacity=".45"/>
+        <rect x="380" y="140" width="44" height="160" rx="8" fill="#5b3a1c" opacity=".5"/>
+        <path d="M250 180 l-40 0 l20 70 l0 46 l-18 4 l56 0 l-18 -4 l0 -46 l20 -70z" fill="#f6e7c8" opacity=".35"/>
+        <use href="#wheel" x="196" y="140" width="34" height="34" style="color:#7ab108"/>
+        <rect x="150" y="318" width="230" height="22" rx="4" fill="#d8b98a"/>
+        <use href="#wheel" x="70"  y="330" width="78" height="78" style="color:#7ab108"/>
+        <use href="#wheel" x="130" y="350" width="70" height="70" style="color:#e9c018"/>
+        <use href="#wheel" x="300" y="340" width="74" height="74" style="color:#7ab108" opacity=".8"/>
+        <use href="#half"  x="360" y="370" width="92" height="56" style="color:#e9c018"/>
+        <use href="#wheel" x="230" y="372" width="60" height="60" style="color:#f08a24" opacity=".9"/>
+      </svg>
+      <span class="tag">PHOTO · Bar top at close</span>
+    </div>
+  </div>
+</section>
+
+<!-- 2. WHY -->
+<section class="why" id="why">
+  <div class="wrap why-grid">
+    <div class="ph ph--prep" role="img" aria-label="Placeholder photo: garnish prep station with cut citrus">
+      <svg class="art" viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect x="40" y="70" width="420" height="270" rx="16" fill="#c99a63"/>
+        <rect x="52" y="82" width="396" height="246" rx="12" fill="#d9ac74"/>
+        <g opacity=".25" stroke="#8b5e30" stroke-width="2"><path d="M60 140h380M60 210h380M60 280h380"/></g>
+        <use href="#wheel" x="80"  y="110" width="80" height="80" style="color:#7ab108"/>
+        <use href="#wheel" x="140" y="150" width="80" height="80" style="color:#7ab108"/>
+        <use href="#wheel" x="96"  y="210" width="74" height="74" style="color:#7ab108"/>
+        <use href="#half"  x="230" y="120" width="110" height="66" style="color:#e9c018"/>
+        <use href="#wheel" x="250" y="200" width="84" height="84" style="color:#e9c018"/>
+        <use href="#wheel" x="340" y="160" width="82" height="82" style="color:#f08a24"/>
+        <rect x="300" y="268" width="150" height="14" rx="7" fill="#9aa1a6" transform="rotate(-12 375 275)"/>
+        <rect x="430" y="248" width="46" height="20" rx="8" fill="#2b2c2d" transform="rotate(-12 453 258)"/>
+      </svg>
+      <span class="tag">PHOTO · Garnish prep</span>
+    </div>
+    <div>
+      <p class="eyebrow">Why we're doing this</p>
+      <h2>Garnish waste gets guessed. We want to count it.</h2>
+      <p class="lede">There's plenty of research on food waste as a whole. Almost none of it looks at bar and catering operations, and even less at citrus and garnish specifically. Ask an operator how much of their prepped citrus goes in the trash and you'll usually get a rough percentage, not a number anyone wrote down.</p>
+      <p class="lede">This project counts it: what gets bought, what gets cut, how it's stored, and what gets tossed at close. Then we look at which practices make the biggest difference.</p>
+      <div class="stat"><strong>?</strong><span><b style="color:var(--ink)">The number nobody has.</b> How much of the citrus a typical bar cuts each night ends up in the trash. That's what we're here to find out.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. SURVEYS -->
+<section class="surveys" id="surveys">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow">Pick your version</p>
+      <h2>Help us count</h2>
+      <p class="lede">Every version feeds the same study. Choose the one that fits your role. Everyone who takes part gets the full results free.</p>
+    </div>
+    <div class="cards">
+      <article class="card card--feature">
+        <span class="flag">Start here</span>
+        <h3>Owners &amp; Managers</h3>
+        <p class="who">For bar owners, GMs, beverage managers, and F&amp;B directors.</p>
+        <div class="meta"><span class="chip">⏱ ~8 min</span><span class="chip">Full survey</span></div>
+        <p class="get"><b>You get:</b> the full report, plus benchmarks for your venue type when it's released.</p>
+        <a class="btn btn--primary" href="#">Take the full survey</a>
+      </article>
+
+      <article class="card">
+        <h3>Bartenders &amp; Closers</h3>
+        <p class="who">For the people who cut it in the afternoon and toss it at close.</p>
+        <div class="meta"><span class="chip">⏱ ~3 min</span><span class="chip">Quick form</span></div>
+        <p class="get"><b>You get:</b> the free results and a one-page summary you can share with your manager.</p>
+        <a class="btn btn--dark" href="#">Start the 3-minute version</a>
+      </article>
+
+      <article class="card">
+        <h3>Caterers</h3>
+        <p class="who">For catering owners, event leads, and banquet teams.</p>
+        <div class="meta"><span class="chip">⏱ ~6 min</span><span class="chip">Event-based</span></div>
+        <p class="get"><b>You get:</b> the free report with per-event and per-guest results for catering.</p>
+        <a class="btn btn--dark" href="#">Start the caterer version</a>
+      </article>
+
+      <article class="card card--wide">
+        <div class="split">
+          <div>
+            <h3>End-of-Shift Photo Program</h3>
+            <p class="who">For bartenders and closers. Snap one photo of the garnish you're tossing at close.</p>
+            <div class="meta"><span class="chip">⏱ ~1 min per photo</span><span class="chip chip--gold">$5 gift card after approval</span></div>
+            <p class="get"><b>You get:</b> a $5 gift card for each approved photo, plus the free results.</p>
+            <a class="btn btn--dark" href="#">Join the photo program</a>
+          </div>
+          <div class="qr-row">
+            <svg class="qr" id="qr" viewBox="0 0 29 29" role="img" aria-label="QR code placeholder"></svg>
+            <small><b style="color:var(--ink)">Scan at the bar.</b><br>Post this by the trash<br>or the closing checklist.<br><em>(QR placeholder)</em></small>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Share Invoices <span style="font-family:var(--body);font-size:.8rem;color:var(--ink-75)">(optional)</span></h3>
+        <p class="who">For operators willing to share fruit purchase records for a set period.</p>
+        <div class="meta"><span class="chip">🔒 Confidential</span><span class="chip">Set time window</span></div>
+        <p class="get"><b>You get:</b> a private comparison of what you bought vs. what similar venues use.</p>
+        <a class="btn btn--secondary" href="#">Learn how to share</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 4. HOW IT WORKS -->
+<section id="how">
+  <div class="wrap center">
+    <p class="eyebrow">How it works</p>
+    <h2>Three steps, no strings</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div>
+        <h3>Answer a few questions</h3>
+        <p>The survey adapts to your setup, so a hotel bar and a wedding caterer only see what applies to them.</p>
+      </div>
+      <div class="step">
+        <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
+        <h3>Share a photo or invoices</h3>
+        <p>Optional. A quick end-of-shift photo or a set of purchase records makes the numbers real.</p>
+      </div>
+      <div class="step">
+        <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 14l2 2 4-4"/></svg></div>
+        <h3>Get the free results</h3>
+        <p>When the report is published, everyone who took part gets it first, free.</p>
+      </div>
+    </div>
+    <p class="privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Answers are anonymized. No business names are published without permission.</p>
+  </div>
+</section>
+
+<!-- 5. WHAT EXISTS / DOESN'T -->
+<section class="gap" id="gap">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow">The research gap</p>
+      <h2>What we know, and what nobody's counted</h2>
+    </div>
+    <div class="cols">
+      <div class="col col--exists">
+        <h3>What research exists</h3>
+        <ul>
+          <li>General food waste studies and cost estimates</li>
+          <li>Foodservice waste data from industry groups</li>
+          <li>[Placeholder: sourced study]</li>
+        </ul>
+      </div>
+      <div class="col col--missing">
+        <h3>What doesn't exist yet</h3>
+        <ul>
+          <li>Real counts of citrus garnish waste by venue type</li>
+          <li>How storage, cutting practices, and prep decisions affect waste</li>
+          <li>Who decides what gets thrown out</li>
+        </ul>
+      </div>
+      <div class="col col--adds">
+        <h3>What this project adds</h3>
+        <ul>
+          <li>Real counts, not estimates</li>
+          <li>Real practices from working bars, caterers, and hotels</li>
+          <li>Benchmarks by venue type</li>
+        </ul>
+      </div>
+    </div>
+    <p class="placeholder-note">Placeholder bullets. Sourced items coming soon.</p>
+  </div>
+</section>
+
+<!-- 6. TIMELINE -->
+<section id="timeline">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow">Timeline</p>
+      <h2>Where we are</h2>
+    </div>
+    <ol class="timeline">
+      <li class="tl now"><span class="dot"></span><span class="when">Dates coming soon</span><h3>Survey open</h3><p>Owners, bartenders, caterers, and the photo program are collecting responses.</p></li>
+      <li class="tl"><span class="dot"></span><span class="when">Dates coming soon</span><h3>Interviews</h3><p>15-minute conversations with operators to explain the numbers behind the numbers.</p></li>
+      <li class="tl"><span class="dot"></span><span class="when">Dates coming soon</span><h3>Report released</h3><p>Free results go to every participant first, then to the public.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 7. TALK TO US -->
+<section class="talk" id="talk">
+  <div class="wrap talk-grid">
+    <div>
+      <p class="eyebrow">Talk to us</p>
+      <h2>Got 15 minutes?</h2>
+      <p>We're looking for operators who'll walk us through how citrus moves through their bar or kitchen, from the produce order to the trash can. No prep needed, and nothing to buy.</p>
+      <ul>
+        <li>15 minutes by phone or video</li>
+        <li>At a time that works around your service</li>
+        <li>Your name stays private unless you say otherwise</li>
+      </ul>
+    </div>
+    <form class="form" id="talkForm" novalidate>
+      <div class="two">
+        <div class="field"><label for="n">Name</label><input id="n" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="b">Business</label><input id="b" name="business" autocomplete="organization" required></div>
+      </div>
+      <div class="field"><label for="e">Email</label><input id="e" name="email" type="email" autocomplete="email" required></div>
+      <div class="field"><label for="r">Role</label>
+        <select id="r" name="role"><option value="">Choose one</option><option>Owner / GM</option><option>Bar or beverage manager</option><option>Bartender / closer</option><option>Caterer / event lead</option><option>Hotel F&amp;B</option><option>Other</option></select>
+      </div>
+      <button class="btn btn--primary" type="submit">Count me in</button>
+      <p class="thanks" id="thanks" role="status">Thanks! We'll reach out to schedule. (Mockup only. Nothing was sent.)</p>
+      <p class="fine">Mockup form. We'll only use your details to schedule the interview.</p>
+    </form>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="center"><p class="eyebrow">FAQ</p><h2>Questions</h2></div>
+    <div class="faq-list">
+      <details open><summary>Who's behind this?</summary><p>CITREVE, a woman-owned company in Bluffdale, Utah, founded by Chef Nettie Frank. We work with bars, caterers, and hotels every day, and we kept hearing the same guess about garnish waste with no numbers behind it.</p></details>
+      <details><summary>Are my answers anonymous?</summary><p>Yes. Responses are anonymized before analysis. Results are reported in groups (by venue type, size, and region), never by individual business.</p></details>
+      <details><summary>What happens to my data?</summary><p>It's used only for this study. We don't sell it or share it, and we don't publish any business name without written permission. Invoices and photos are stored securely and kept confidential.</p></details>
+      <details><summary>Is this a sales pitch?</summary><p>No. Results are shared free with everyone who takes part. Taking the survey won't put you on a sales list.</p></details>
+      <details><summary>When will results be out?</summary><p>Dates are coming soon. Participants get the report first, as soon as it's published.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- 9. FOOTER (mirrors citreve.com) -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>Shop</h4>
+        <ul><li><a href="#">Search</a></li><li><a href="#">Shop</a></li><li><a href="#">Wholesale</a></li><li><a href="#">Collaborate</a></li><li><a href="#">From the Peel</a></li><li><a href="#">CITREVE Recipes</a></li><li><a href="#">Creator CITREVE Recipes</a></li></ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul><li><a href="#">CITREVE Partnerships</a></li><li><a href="#">Contact Us</a></li><li><a href="#">Refund Policy</a></li><li><a href="#">Shipping Policy</a></li><li><a href="#">Terms of Service</a></li></ul>
+      </div>
+      <div class="news">
+        <h4>Join our Newsletter</h4>
+        <form onsubmit="return false"><input type="email" placeholder="Email" aria-label="Email"><button aria-label="Subscribe">→</button></form>
+        <div class="social">
+          <a href="https://www.facebook.com/profile.php?id=61577778472993" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v9h4v-9h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg></a>
+          <a href="https://www.instagram.com/citreve_official" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM21.9 7c-.1-1.6-.4-3-1.6-4.2S17.6 1.2 16 1.1C14.4 1 9.6 1 8 1.1 6.4 1.2 5 1.6 3.8 2.8S2.2 5.4 2.1 7C2 8.6 2 13.4 2.1 15c.1 1.6.4 3 1.6 4.2s2.6 1.5 4.2 1.6c1.6.1 6.4.1 8 0 1.6-.1 3-.4 4.2-1.6s1.5-2.6 1.6-4.2c.1-1.6.1-6.4.1-8zm-2.4 10.5a3.3 3.3 0 0 1-1.8 1.8c-1.3.5-4.3.4-5.7.4s-4.4.1-5.7-.4a3.3 3.3 0 0 1-1.8-1.8c-.5-1.3-.4-4.3-.4-5.7s-.1-4.4.4-5.7a3.3 3.3 0 0 1 1.8-1.8c1.3-.5 4.3-.4 5.7-.4s4.4-.1 5.7.4a3.3 3.3 0 0 1 1.8 1.8c.5 1.3.4 4.3.4 5.7s.1 4.4-.4 5.7z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="pay" aria-label="Payment methods"><span>AMEX</span><span>Apple Pay</span><span>DISCOVER</span><span>G Pay</span><span>MC</span><span>Shop Pay</span><span>VISA</span></div>
+      <div>© 2026, CITREVE Powered by Shopify</div>
+      <div class="policies"><a href="#">Privacy policy</a><a href="#">Terms of service</a><a href="#">Shipping policy</a><a href="#">Contact information</a><a href="#">Refund policy</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile menu
+const mb=document.querySelector('.menu-btn'),mn=document.getElementById('mnav');
+mb.addEventListener('click',()=>{const o=mn.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
+mn.addEventListener('click',e=>{if(e.target.tagName==='A'){mn.classList.remove('open');mb.setAttribute('aria-expanded',false)}});
+
+// QR placeholder (decorative pattern, not a scannable code)
+(function(){const s=document.getElementById('qr');let h='<rect width="29" height="29" fill="#fff"/>';let seed=7;const r=()=>(seed=(seed*9301+49297)%233280)/233280;
+const finder=(x,y)=>`<rect x="${x}" y="${y}" width="7" height="7" fill="#2b2c2d"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#fff"/><rect x="${x+2}" y="${y+2}" width="3" height="3" fill="#2b2c2d"/>`;
+for(let y=0;y<29;y++)for(let x=0;x<29;x++){const inF=(x<8&&y<8)||(x>20&&y<8)||(x<8&&y>20);if(!inF&&r()>.52)h+=`<rect x="${x}" y="${y}" width="1" height="1" fill="#2b2c2d"/>`}
+h+=finder(0,0)+finder(22,0)+finder(0,22);s.innerHTML=h})();
+
+// Mockup form
+document.getElementById('talkForm').addEventListener('submit',e=>{e.preventDefault();document.getElementById('thanks').style.display='block'});
+</script>
+</body>
+</html>
